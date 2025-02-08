@@ -31,6 +31,9 @@ public class Poster
   // CONSTRUCTOR
   //------------------------
 
+  public Poster() {
+  }
+
   public Poster(Long aId, String aUrl, User aUser)
   {
     id = aId;
