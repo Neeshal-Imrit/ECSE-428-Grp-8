@@ -12,5 +12,8 @@ public interface PosterRepository extends CrudRepository<Poster, Long> {
     List<Poster> findByUserId(Long userId);
 
     Poster findPosterById(Long id);
+
+    //find all posters
+    List<Poster> findAll();
 }
 
