@@ -30,6 +30,38 @@ public class Poster {
 
   private String title;
 
+  public String getTitle() {
+    return title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public float getPrice() {
+    return price;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setPrice(float price) {
+    this.price = price;
+  }
+
+  public void setImageData(byte[] imageData) {
+    this.imageData = imageData;
+  }
+
+  public byte[] getImageData() {
+    return imageData;
+  }
+
   private String description;
 
   private float price;
