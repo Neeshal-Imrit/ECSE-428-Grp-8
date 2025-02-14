@@ -3,6 +3,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+
+import ca.mcgill.ecse428.postr.exception.PostrException;
 import ca.mcgill.ecse428.postr.dao.PosterRepository;
 import ca.mcgill.ecse428.postr.model.Poster;
 import jakarta.transaction.Transactional;
@@ -33,4 +36,11 @@ public class PosterService {
         return posterRepository.save(poster);
     }
 
+    @Transactional
+    public Poster uploadPoster(String userEmail, byte[] imageData, float price, String description, String title ){
+        
+        //throw new PostrException(HttpStatus.BAD_REQUEST, "The poster is empty");
+
+        
+    }
 }
