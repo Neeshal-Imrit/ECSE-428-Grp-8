@@ -1,8 +1,8 @@
 <!-- src/views/HomeView.vue -->
 <template>
   <div>
-    <h1>Home Page</h1>
-    <p>Welcome to the home page!</p>
+    <h1>Shop Page</h1>
+    <p>Welcome to the Shop page!</p>
   </div>
 </template>
 
