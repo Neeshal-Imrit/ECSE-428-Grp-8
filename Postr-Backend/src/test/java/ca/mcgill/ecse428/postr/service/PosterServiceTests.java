@@ -40,9 +40,7 @@ class PosterServiceTest {
 
     @BeforeEach
     void setUp() {
-        mockUser = new User();
-        mockUser.setEmail("test@example.com");
-
+        mockUser = new User("test@example.com", "password");
         mockPoster = new Poster();
         mockPoster.setTitle("Test Poster");
         mockPoster.setDescription("Test Description");
@@ -63,7 +61,8 @@ class PosterServiceTest {
 
     @Test
     void testFindPosterById() {
-        when(posterRepository.findById(1L)).thenReturn(Optional.of(mockPoster)); // Use Optional
+        when(posterRepository.findPosterById(1L)).thenReturn(mockPoster);
+ 
         
         Poster poster = posterService.findPosterById(1L);
         
