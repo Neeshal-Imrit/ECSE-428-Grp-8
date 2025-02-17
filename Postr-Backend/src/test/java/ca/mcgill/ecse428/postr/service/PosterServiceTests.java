@@ -22,8 +22,8 @@ import ca.mcgill.ecse428.postr.model.Poster;
 import ca.mcgill.ecse428.postr.model.User;
 import org.springframework.http.HttpStatus;
 
-@SpringBootTest  // Ensures Spring Boot test context
-@ExtendWith(MockitoExtension.class) // Enables Mockito extension
+@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class PosterServiceTest {
 
     @Mock

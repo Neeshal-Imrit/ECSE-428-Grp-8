@@ -1,6 +1,5 @@
 package ca.mcgill.ecse428.postr.controller;
 
-import ca.mcgill.ecse428.postr.dto.PosterDTO;
 import ca.mcgill.ecse428.postr.dto.PosterRequestDTO;
 import ca.mcgill.ecse428.postr.dto.PosterResponseDTO;
 import ca.mcgill.ecse428.postr.model.Poster;
@@ -93,9 +92,4 @@ public class PosterController {
                                                     posterRequestDTO.getTitle());
         return ResponseEntity.ok(new PosterResponseDTO(poster));
     }
-
-
-//    public PosterResponseDTO convertToResponseDTO(Poster poster) {
-//        return new PosterResponseDTO(poster.getTitle(), poster.getDescription(), poster.getPrice(), poster.getImageData(), poster.getUser().getEmail());
-//    }
 }
