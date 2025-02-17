@@ -49,7 +49,7 @@ public class PosterService {
 
     @Transactional
     public Poster uploadPoster(String userEmail, byte[] imageData, float price, String description, String title ){
-        if(userEmail == null){
+        if(userEmail == null || userEmail.isEmpty()){
             throw new PostrException(HttpStatus.BAD_REQUEST, "The poster uploader has no email");
         }
         User user = userRepository.findUserByEmail(userEmail);
@@ -65,11 +65,11 @@ public class PosterService {
             throw new PostrException(HttpStatus.BAD_REQUEST, "The poster's price cannot be negative");
         }
 
-        if(description == null){
+        if(description == null || description.isEmpty()){
             throw new PostrException(HttpStatus.BAD_REQUEST, "The description cannot be empty");
         }
 
-        if(title == null){
+        if(title == null || title.isEmpty()){
             throw new PostrException(HttpStatus.BAD_REQUEST, "The poster must have a title");
         }
         Poster aPoster = posterRepository.findPosterByTitle(title);

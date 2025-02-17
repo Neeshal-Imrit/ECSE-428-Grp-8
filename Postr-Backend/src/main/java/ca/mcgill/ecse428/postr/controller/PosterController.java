@@ -35,12 +35,12 @@ public class PosterController {
      * Retrieve a poster by its ID.
      */
     @GetMapping("/posters/id/{id}")
-    public ResponseEntity<PosterDTO> getPosterById(@PathVariable Long id) {
+    public ResponseEntity<PosterResponseDTO> getPosterById(@PathVariable Long id) {
         Poster poster = posterService.findPosterById(id);
         if (poster == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new PosterDTO(poster));
+        return ResponseEntity.ok(new PosterResponseDTO(poster));
     }
 
     /**
@@ -48,10 +48,10 @@ public class PosterController {
      * Retrieve all posters associated with a given user ID.
      */
     @GetMapping("/posters/userid/{userId}")
-    public List<PosterDTO> getPostersByUserId(@PathVariable Long userId) {
+    public List<PosterResponseDTO> getPostersByUserId(@PathVariable Long userId) {
         List<Poster> posters = posterService.findByUserId(userId);
         return posters.stream()
-                      .map(PosterDTO::new)
+                      .map(PosterResponseDTO::new)
                       .collect(Collectors.toList());
     }
 
@@ -60,10 +60,10 @@ public class PosterController {
      * Retrieve all posters associated with a given user email.
      */
     @GetMapping("/posters/useremail/{userEmail}")
-    public List<PosterDTO> getPostersByUserEmail(@PathVariable String userEmail) {
+    public List<PosterResponseDTO> getPostersByUserEmail(@PathVariable String userEmail) {
         List<Poster> posters = posterService.findByUserEmail(userEmail);
         return posters.stream()
-                      .map(PosterDTO::new)
+                      .map(PosterResponseDTO::new)
                       .collect(Collectors.toList());
     }
 
@@ -72,12 +72,12 @@ public class PosterController {
      * Retrieve a poster by its title.
      */
     @GetMapping("/posters/title/{title}")
-    public ResponseEntity<PosterDTO> getPosterByTitle(@PathVariable String title) {
+    public ResponseEntity<PosterResponseDTO> getPosterByTitle(@PathVariable String title) {
         Poster poster = posterService.findByTitle(title);
         if (poster == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new PosterDTO(poster));
+        return ResponseEntity.ok(new PosterResponseDTO(poster));
     }
 
     /**
@@ -85,13 +85,13 @@ public class PosterController {
      * Upload a new poster.
      */
     @PostMapping("/posters")
-    public ResponseEntity<PosterDTO> uploadPoster(@RequestBody PosterRequestDTO posterRequestDTO) {
+    public ResponseEntity<PosterResponseDTO> uploadPoster(@RequestBody PosterRequestDTO posterRequestDTO) {
         Poster poster = posterService.uploadPoster(posterRequestDTO.getUserEmail(),
                                                     posterRequestDTO.getImageData(),
                                                     posterRequestDTO.getPrice(),
                                                     posterRequestDTO.getDescription(),
                                                     posterRequestDTO.getTitle());
-        return ResponseEntity.ok(new PosterDTO(poster));
+        return ResponseEntity.ok(new PosterResponseDTO(poster));
     }
 
 
