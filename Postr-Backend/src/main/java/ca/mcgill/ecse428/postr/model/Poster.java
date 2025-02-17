@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "poster")
@@ -66,8 +67,7 @@ public class Poster {
 
   private float price;
 
-  @Lob
-  @Column(nullable = false, columnDefinition = "BYTEA")
+  @Column(columnDefinition = "BYTEA")
   private byte[] imageData; 
 
   // ------------------------
