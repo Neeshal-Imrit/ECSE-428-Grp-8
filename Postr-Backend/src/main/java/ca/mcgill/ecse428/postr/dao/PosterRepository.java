@@ -15,5 +15,9 @@ public interface PosterRepository extends CrudRepository<Poster, Long> {
 
     //find all posters
     List<Poster> findAll();
+
+    Poster findPosterByTitle(String title);
+
+    List<Poster> findByUserEmail(String userEmail);
 }
 

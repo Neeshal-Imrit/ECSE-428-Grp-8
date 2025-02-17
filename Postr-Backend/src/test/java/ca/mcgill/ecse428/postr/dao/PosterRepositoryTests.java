@@ -27,24 +27,42 @@ public class PosterRepositoryTests {
         userRepository.deleteAll();
     }
 
-    @Test
-    public void testPosterPersistence() {
-        // Create and save User
-        User user = new User("testuser@gmail.com", "securepassword");
-        user = userRepository.save(user);
-
-        // Create and save Poster
-        String url = "https://example.com/poster.jpg";
-        Poster poster = new Poster(null, url, user);
-        poster = posterRepository.save(poster);
-
-        // Retrieve from database
-        Poster posterFromDB = posterRepository.findPosterById(poster.getId());
-
-        // Assertions
-        assertNotNull(posterFromDB);
-        assertEquals(poster.getId(), posterFromDB.getId());
-        assertEquals(url, posterFromDB.getUrl());
-        assertEquals(user.getId(), posterFromDB.getUser().getId());
+    public byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                                 + Character.digit(s.charAt(i + 1), 16));
+        }
+        return data;
     }
+    @Test
+public void testPosterPersistence() {
+
+    
+    // Create and save User
+    User user = new User("testuser@gmail.com", "securepassword");
+    user = userRepository.save(user);
+
+    // Create and save Poster
+    String url = "https://example.com/poster.jpg";
+    Poster poster = new Poster();
+    poster.setUrl(url);
+    poster.setTitle("Test Poster Title"); // Set title to avoid null constraint
+    poster.setDescription("Test Description");
+    poster.setPrice(0);
+    poster.setImageData(hexStringToByteArray("e04fd020ea3a6910a2d808002b30309d"));
+    poster.setUser(user);
+
+    poster = posterRepository.save(poster);
+
+    // Retrieve from database
+    Poster posterFromDB = posterRepository.findPosterById(poster.getId());
+
+    // Assertions
+    assertNotNull(posterFromDB);
+    assertEquals(poster.getId(), posterFromDB.getId());
+    assertEquals(url, posterFromDB.getUrl());
+    assertEquals(user.getId(), posterFromDB.getUser().getId());
+}
 }
