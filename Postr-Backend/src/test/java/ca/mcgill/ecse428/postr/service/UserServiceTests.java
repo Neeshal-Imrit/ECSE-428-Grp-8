@@ -58,6 +58,14 @@ public class UserServiceTests {
     }
 
     @Test
+    public void testGetUserById() {
+        when(userRepository.findUserById(any())).thenReturn(new User(EMAIL, PASSWORD));
+        User user = userService.getUserById(1L);
+        assertEquals(EMAIL, user.getEmail());
+        assertEquals(PASSWORD, user.getPassword());
+    }
+
+    @Test
     public void testLogIn() {
         when(userRepository.findUserByEmail(EMAIL)).thenReturn(new User(EMAIL, PASSWORD));
         assertTrue(userService.logIn(EMAIL, PASSWORD));
@@ -67,6 +75,18 @@ public class UserServiceTests {
     public void testLogInInvalidEmail() {
         when(userRepository.findUserByEmail(EMAIL)).thenReturn(null);
         assertFalse(userService.logIn(EMAIL, PASSWORD));
+    }
+
+    @Test
+    public void testLogInInvalidPassword() {
+    
+        when(userRepository.findUserByEmail(EMAIL)).thenReturn(new User(EMAIL, PASSWORD));
+        try {
+            userService.logIn(EMAIL, "wrongpassword");
+            fail();
+        } catch (Exception e) {
+            assertEquals("Invalid email or password", e.getMessage());
+        }
     }
     
 }

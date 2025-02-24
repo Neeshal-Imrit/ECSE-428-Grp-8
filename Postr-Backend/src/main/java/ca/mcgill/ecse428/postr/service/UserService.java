@@ -46,7 +46,17 @@ public class UserService {
         if (user == null) {
             return false;
         }
+        // ONLY ADDED this
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
         return user.getPassword().equals(password);
+    }
+
+    @Transactional
+    public User getUserById(Long id) {
+        return userRepository.findUserById(id);
     }
     
 }
