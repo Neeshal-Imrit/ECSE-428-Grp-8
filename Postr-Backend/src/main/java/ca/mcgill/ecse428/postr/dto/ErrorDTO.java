@@ -6,6 +6,8 @@ public class ErrorDTO {
 
     private List<String> errors;
 
+    private String error;
+
     @SuppressWarnings("unused")
     private ErrorDTO(){}
 
@@ -14,12 +16,22 @@ public class ErrorDTO {
     }
     public ErrorDTO(String error) {
         this.errors = List.of(error);
+        this.error = error;
     }
 
     public List<String> getErrors() {
         return errors;
     }
+
+    public String getError() {
+        return error;
+    }
+
     public void setErrors(List<String> errors) {
         this.errors = errors;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

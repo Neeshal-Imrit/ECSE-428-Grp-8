@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse428.postr.service.UserService;
 
 import ca.mcgill.ecse428.postr.dto.UserResponseDTO;
+import ca.mcgill.ecse428.postr.dto.ErrorDTO;
 import ca.mcgill.ecse428.postr.dto.UserRequestDTO;
 
 
@@ -32,6 +33,16 @@ public class UserController {
         }
         
     } 
+
+    @GetMapping("/users/id/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(new UserResponseDTO(userService.getUserById(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("User not found");
+        }
+        
+    }
     
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody UserRequestDTO userRequestDTO) {
@@ -46,10 +57,10 @@ public class UserController {
     @GetMapping("/login/{email}/{password}")
     public ResponseEntity<?> login(@PathVariable String email, @PathVariable String password) {
         try {
-            boolean Response = userService.logIn(email, password);
-            return new ResponseEntity<>(Response, HttpStatus.OK);
+            boolean response = userService.logIn(email, password);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            throw new IllegalArgumentException("User not found");
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 

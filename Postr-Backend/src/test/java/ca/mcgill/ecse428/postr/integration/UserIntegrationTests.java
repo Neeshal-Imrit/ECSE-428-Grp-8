@@ -1,6 +1,7 @@
 package ca.mcgill.ecse428.postr.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Order;
@@ -11,8 +12,11 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import ca.mcgill.ecse428.postr.dao.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import ca.mcgill.ecse428.postr.dao.UserRepository;
+import ca.mcgill.ecse428.postr.dto.ErrorDTO;
 import ca.mcgill.ecse428.postr.dto.UserRequestDTO;
 import ca.mcgill.ecse428.postr.dto.UserResponseDTO;
 
@@ -62,8 +66,10 @@ public class UserIntegrationTests {
     @Test
     @Order(4)
     public void testLoginInvalidPassword() {
-        boolean response = client.getForObject("/login/" + EMAIL + "/" + "wrongpassword", Boolean.class);
-        assertEquals(false, response);
+        ResponseEntity<ErrorDTO> response = client.getForEntity("/login/" + EMAIL + "/" + "wrongpassword", ErrorDTO.class);
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Invalid email or password", response.getBody().getError());
     }
 
     @Test
@@ -73,6 +79,13 @@ public class UserIntegrationTests {
         assertEquals(false, response);
     }
 
+    @Test
+    @Order(6)
+    public void testGetUserById() {
+        Long Id = userRepository.findUserByEmail(EMAIL).getId();
+        UserResponseDTO userResponseDTO = client.getForObject("/users/id/"+ Id, UserResponseDTO.class);
+        assertEquals(EMAIL, userResponseDTO.getEmail());
+        assertEquals(PASSWORD, userResponseDTO.getPassword());
+    }
 
-    // Add your test methods here
 }
