@@ -12,17 +12,15 @@ Background:
 
   Scenario: Successful user sign in
     Given the user is on the sign-in page
-    When he enters a valid email "smith@ap.com" and password "password2"
+    When he enters an email "smith@ap.com" and password "password2"
     Then he should be redirected to the home page
 
   Scenario: Sign in with incorrect password (Error Flow)
     Given the user is on the sign-in page
-    When he enters a valid email "smith@ap.com"
-    And an incorrect password "WrongPass456"
+    When he enters an email "smith@ap.com" and an invalid password "Pass456"
     Then he should see an error message "Invalid password"
 
   Scenario: Sign in with unregistered email (Error Flow)
     Given the user is on the sign-in page
-    When he enters an invalid email "yeet@ap.com"
-    And a password "WrongPass456"
+    When he enters an invalid email "yeet@ap.com" and a password "GoodPass456"
     Then he should see an error message "Invalid email"
