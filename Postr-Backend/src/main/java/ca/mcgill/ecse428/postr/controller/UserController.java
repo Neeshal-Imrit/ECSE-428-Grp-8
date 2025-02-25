@@ -46,12 +46,9 @@ public class UserController {
     
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        try {
-            return new ResponseEntity<>(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())), HttpStatus.OK);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("User not created");
-        }
-        
+
+        return ResponseEntity.ok(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())));
+
     }
 
     @GetMapping("/login/{email}/{password}")

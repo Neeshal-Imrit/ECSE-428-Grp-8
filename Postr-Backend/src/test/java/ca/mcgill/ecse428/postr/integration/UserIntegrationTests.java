@@ -88,4 +88,14 @@ public class UserIntegrationTests {
         assertEquals(PASSWORD, userResponseDTO.getPassword());
     }
 
+    @Test
+    @Order(7)
+    public void testCreateUserInvalidPassword() {
+        UserRequestDTO userRequestDTO = new UserRequestDTO(EMAIL, "1234567");
+        ResponseEntity<ErrorDTO> response = client.postForEntity("/users", userRequestDTO, ErrorDTO.class);
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Password must be at least 8 characters long", response.getBody().getError());
+    }
+
 }
