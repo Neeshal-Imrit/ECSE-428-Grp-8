@@ -31,6 +31,11 @@ public class UserService {
             throw new IllegalArgumentException("Invalid email");
         }
 
+        User foundUser = userRepository.findUserByEmail(email);
+        if (foundUser != null){
+            throw new IllegalArgumentException("Email already exists");
+        }
+
         User user = new User(email, password);
         return userRepository.save(user);
     }
@@ -44,11 +49,11 @@ public class UserService {
     public boolean logIn(String email, String password) {
         User user = userRepository.findUserByEmail(email);
         if (user == null) {
-            return false;
+            throw new IllegalArgumentException("Invalid email"); 
         }
         // ONLY ADDED this
         if (!user.getPassword().equals(password)) {
-            throw new IllegalArgumentException("Invalid email or password");
+            throw new IllegalArgumentException("Invalid password");
         }
 
         return user.getPassword().equals(password);
