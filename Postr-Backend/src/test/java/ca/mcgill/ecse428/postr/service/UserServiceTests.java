@@ -3,6 +3,7 @@ package ca.mcgill.ecse428.postr.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.mcgill.ecse428.postr.exception.PostrException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ca.mcgill.ecse428.postr.dao.UserRepository;
 import ca.mcgill.ecse428.postr.service.UserService;
 import ca.mcgill.ecse428.postr.model.User;
+import org.springframework.http.HttpStatus;
 
 
 @SpringBootTest
@@ -37,16 +39,24 @@ public class UserServiceTests {
 
     @Test
     public void testCreateUserInvalidPassword() {
-        assertThrows(IllegalArgumentException.class, () -> {
+
+        PostrException ex = assertThrows(PostrException.class, () -> {
             userService.createUser(EMAIL, "1234567");
         });
+
+        assertEquals("Password must be at least 8 characters long", ex.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatus());
     }
 
     @Test
     public void testCreateUserInvalidEmail() {
-        assertThrows(IllegalArgumentException.class, () -> {
+
+        PostrException ex =  assertThrows(PostrException.class, () -> {
             userService.createUser("bob", PASSWORD);
         });
+
+        assertEquals("Invalid email", ex.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatus());
     }
 
     @Test
