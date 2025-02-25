@@ -49,7 +49,7 @@ public class UserService {
     public boolean logIn(String email, String password) {
         User user = userRepository.findUserByEmail(email);
         if (user == null) {
-            throw new IllegalArgumentException("Invalid email"); 
+            throw new IllegalArgumentException("Invalid email");
         }
         // ONLY ADDED this
         if (!user.getPassword().equals(password)) {
@@ -63,5 +63,5 @@ public class UserService {
     public User getUserById(Long id) {
         return userRepository.findUserById(id);
     }
-    
+
 }

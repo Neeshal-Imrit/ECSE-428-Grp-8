@@ -49,7 +49,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())), HttpStatus.OK);
         } catch (Exception e) {
-            throw new IllegalArgumentException("User not created");
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
         
     }

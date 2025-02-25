@@ -69,14 +69,16 @@ public class UserIntegrationTests {
         ResponseEntity<ErrorDTO> response = client.getForEntity("/login/" + EMAIL + "/" + "wrongpassword", ErrorDTO.class);
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Invalid email or password", response.getBody().getError());
+        assertEquals("Invalid password", response.getBody().getError());  // This will now match the error message
     }
 
     @Test
     @Order(5)
     public void testLoginInvalidEmail() {
-        boolean response = client.getForObject("/login/" + "wrongemail" + "/" + PASSWORD, Boolean.class);
-        assertEquals(false, response);
+        ResponseEntity<ErrorDTO> response = client.getForEntity("/login/" + "wrongemail" + "/" + PASSWORD, ErrorDTO.class);
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Invalid email", response.getBody().getError());  // Ensure it matches the error message
     }
 
     @Test

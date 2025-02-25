@@ -1,6 +1,7 @@
 package ca.mcgill.ecse428.postr.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
@@ -74,19 +75,23 @@ public class UserServiceTests {
     @Test
     public void testLogInInvalidEmail() {
         when(userRepository.findUserByEmail(EMAIL)).thenReturn(null);
-        assertFalse(userService.logIn(EMAIL, PASSWORD));
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            userService.logIn(EMAIL, PASSWORD);
+        });
+        assertEquals("Invalid email", thrown.getMessage());
     }
 
     @Test
     public void testLogInInvalidPassword() {
-    
+
         when(userRepository.findUserByEmail(EMAIL)).thenReturn(new User(EMAIL, PASSWORD));
         try {
             userService.logIn(EMAIL, "wrongpassword");
             fail();
         } catch (Exception e) {
-            assertEquals("Invalid email or password", e.getMessage());
+            assertEquals("Invalid password", e.getMessage());
         }
     }
-    
+
 }
