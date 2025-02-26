@@ -148,7 +148,7 @@ public class UploadPosterStepDefinitions {
         existingPoster.setTitle("Existing Title");
         existingPoster.setDescription("Existing description");
         existingPoster.setPrice(10.0f);
-        existingPoster.setImageData(Base64.getDecoder().decode("imageData"));
+        existingPoster.setImageData(Base64.getDecoder().decode("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC"));
         existingPoster.setUser(loggedInUser);
         posterRepository.save(existingPoster);
 
