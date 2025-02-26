@@ -36,7 +36,7 @@ public class UserSignInStepDefinitions {
         userRepository.deleteAll();
     }
 
-    @Given("the following users exist in the system")
+    @Given("the following users exist in the system for sign up")
     public void theFollowingUsersExistInTheSystem(DataTable dataTable) {
         clearDatabase();
 
@@ -70,8 +70,8 @@ public class UserSignInStepDefinitions {
         controllerResponse = userController.login(email, password);  // Use the class-level variable
     }
 
-    @Then("he should see an error message {string}")
-    public void heShouldSeeAnErrorMessage(String expectedErrorMessage) {
+    @Then("he should see an error message sign in {string}")
+    public void heShouldSeeAnErrorMessageSignIn(String expectedErrorMessage) {
         assertEquals(400, controllerResponse.getStatusCode().value()); // Assuming a 400 status for invalid login
         assertEquals(expectedErrorMessage, ((ErrorDTO) controllerResponse.getBody()).getError());
     }
