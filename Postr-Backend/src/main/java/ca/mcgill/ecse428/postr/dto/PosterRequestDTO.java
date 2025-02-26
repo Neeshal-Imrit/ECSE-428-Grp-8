@@ -4,10 +4,10 @@ public class PosterRequestDTO {
     private String title;
     private String description;
     private float price;
-    private byte[] imageData;
+    private String imageData;
     private String userEmail;
 
-    public PosterRequestDTO(String title, String description, float price, byte[] imageData, String userEmail) {
+    public PosterRequestDTO(String title, String description, float price, String imageData, String userEmail) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -27,7 +27,7 @@ public class PosterRequestDTO {
         return this.price;
     }
 
-    public byte[] getImageData() {
+    public String getUrl() {
         return this.imageData;
     }
 

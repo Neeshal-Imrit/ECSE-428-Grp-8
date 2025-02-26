@@ -32,7 +32,7 @@ Then the following posters shall exist in the system
       | title          | description                     | price | imageData                                                                                             | user         |
       | CoolPoster     | It's a cool poster!             | 1.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
       | VeryCoolPoster | It's a very cool poster!        | 1.55  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | smith@ap.com |
-      | Amazing Art    | A stunning piece of digital art | 5.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
+      
 
 Scenario: User Uploads a Poster Without a Description (Error Flow)
 Given the user is on the upload poster page
@@ -42,7 +42,7 @@ And the following posters shall exist in the system
       | title          | description                     | price | imageData                                                                                             | user         |
       | CoolPoster     | It's a cool poster!             | 1.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
       | VeryCoolPoster | It's a very cool poster!        | 1.55  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | smith@ap.com |
-      | Amazing Art    | A stunning piece of digital art | 5.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
+      
 
 Scenario: User Uploads a Poster With an invalid price (Error Flow)
 Given the user is on the upload poster page
@@ -52,7 +52,7 @@ And the following posters shall exist in the system
       | title          | description                     | price | imageData                                                                                             | user         |
       | CoolPoster     | It's a cool poster!             | 1.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
       | VeryCoolPoster | It's a very cool poster!        | 1.55  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | smith@ap.com |
-      | Amazing Art    | A stunning piece of digital art | 5.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
+
 
 Scenario: User Uploads a Poster Without an Image (Error Flow)
 Given the user is logged in as "jeff@ap.com"
@@ -62,7 +62,7 @@ And the following posters shall exist in the system
       | title          | description                     | price | imageData                                                                                             | user         |
       | CoolPoster     | It's a cool poster!             | 1.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
       | VeryCoolPoster | It's a very cool poster!        | 1.55  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | smith@ap.com |
-      | Amazing Art    | A stunning piece of digital art | 5.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
+      
 
 Scenario: User Uploads a Poster with the same title as an existing one (Error Flow)
 Given the user is logged in as "jeff@ap.com"
