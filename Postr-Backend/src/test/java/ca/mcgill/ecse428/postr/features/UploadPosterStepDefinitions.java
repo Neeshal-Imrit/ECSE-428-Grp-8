@@ -72,7 +72,11 @@ public class UploadPosterStepDefinitions {
             poster.setTitle(row.get("title"));
             poster.setDescription(row.get("description"));
             poster.setPrice(Float.parseFloat(row.get("price")));
-            poster.setImageData(Base64.getDecoder().decode(row.get("imageData")));
+            try {
+                poster.setImageData(Base64.getDecoder().decode(row.get("imageData")));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid base64 image data for poster: " + row.get("title"), e);
+            }
             User user = userRepository.findUserByEmail(row.get("user"));
             assertNotNull(user, "Poster must have a valid user.");
             poster.setUser(user);
@@ -167,5 +171,36 @@ public class UploadPosterStepDefinitions {
             controllerResponse = ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @Given("there are no posters available in the system")
+    public void there_are_no_posters_available_in_the_system() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @When("the user is on the home page")
+    public void the_user_is_on_the_home_page() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Then("they should see a message {string}")
+    public void they_should_see_a_message(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Then("they should see the following posters displayed in the featured section")
+    public void they_should_see_the_following_posters_displayed_in_the_featured_section(io.cucumber.datatable.DataTable dataTable) {
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+        throw new io.cucumber.java.PendingException();
+    }
+
+
+
 
 }
