@@ -3,6 +3,13 @@ Feature: View All Available Poster Designs
   I want to browse all available poster designs
   So that I can explore and purchase my favorite designs
 
+  Background:
+   Given the following users exist in the system
+      | email        | password  | 
+      | jeff@ap.com  | password1 | 
+      | smith@ap.com | password2 | 
+  Given the user is logged in as "jeff@ap.com"
+
   Scenario: Display All Available Posters (Normal Flow)
     Given the following posters exist in the system
       | title          | description                     | price | imageData   | user         |

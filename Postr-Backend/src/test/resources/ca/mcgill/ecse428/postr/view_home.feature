@@ -3,6 +3,13 @@ Feature: View Website Home Page
   I want to view the home page  
   So that I can explore different categories of posters and view some of the most popular designs  
 
+  Background:
+    Given the following users exist in the system
+      | email        | password  | 
+      | jeff@ap.com  | password1 | 
+      | smith@ap.com | password2 | 
+    Given the user is logged in as "jeff@ap.com"
+    
   Scenario: User successfully sees categories and posters (Normal Flow)  
     Given the user is on the home page
     And the following posters exist in the system
