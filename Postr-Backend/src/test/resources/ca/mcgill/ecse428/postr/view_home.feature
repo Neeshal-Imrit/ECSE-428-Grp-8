@@ -9,14 +9,14 @@ Feature: View Website Home Page
       | jeff@ap.com  | password1 | 
       | smith@ap.com | password2 | 
     Given the user is logged in as "jeff@ap.com"
-    
-  Scenario: User successfully sees categories and posters (Normal Flow)  
-    Given the user is on the home page
-    And the following posters exist in the system
-      | title          | description                     | price | imageData   |  
-      | CoolPoster     | It's a cool poster!             | 1.00  | 1, 2, 3     |  
-      | VeryCoolPoster | It's a very cool poster!        | 1.55  | 1, 2, 4     |  
-      | Amazing Art    | A stunning piece of digital art | 5.00  | artwork.jpg |     
+
+  Scenario: User successfully sees categories and posters (Normal Flow)
+    Given the following posters exist in the system
+      | title          | description                     | price | imageData   |
+      | CoolPoster     | It's a cool poster!             | 1.00  | 1, 2, 3     |
+      | VeryCoolPoster | It's a very cool poster!        | 1.55  | 1, 2, 4     |
+      | Amazing Art    | A stunning piece of digital art | 5.00  | artwork.jpg |
+    Given the user is on the home page view
     Then they should see the following posters displayed in the featured section  
       | title          | description                     | price | imageData   |  
       | CoolPoster     | It's a cool poster!             | 1.00  | 1, 2, 3     |  

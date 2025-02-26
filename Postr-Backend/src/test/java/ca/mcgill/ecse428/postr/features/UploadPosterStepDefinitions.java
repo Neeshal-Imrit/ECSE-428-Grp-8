@@ -234,4 +234,5 @@ public class UploadPosterStepDefinitions {
             assertEquals(expectedPoster.get("user"), actualPoster.getUser().getEmail(), "User mismatch.");
         }
     }
+
 }
