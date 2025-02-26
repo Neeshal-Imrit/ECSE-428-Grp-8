@@ -86,7 +86,6 @@ public class PosterService {
         poster.setTitle(title);
         poster.setUser(user);
 
-        posterRepository.save(poster);
-        return poster;
+        return posterRepository.save(poster);
     }
 }
