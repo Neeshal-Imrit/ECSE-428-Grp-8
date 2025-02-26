@@ -48,7 +48,7 @@ public class PosterService {
     }
 
     @Transactional
-    public Poster uploadPoster(String userEmail, byte[] imageData, float price, String description, String title ){
+    public Poster uploadPoster(String userEmail, String imageData, float price, String description, String title ){
         if(userEmail == null || userEmail.isEmpty()){
             throw new PostrException(HttpStatus.BAD_REQUEST, "The poster uploader has no email");
         }
@@ -81,7 +81,7 @@ public class PosterService {
 
         Poster poster = new Poster();
         poster.setDescription(description);
-        poster.setImageData(imageData);
+        poster.setUrl(imageData);
         poster.setPrice(price);
         poster.setTitle(title);
         poster.setUser(user);
