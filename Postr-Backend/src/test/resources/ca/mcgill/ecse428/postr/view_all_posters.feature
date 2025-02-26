@@ -5,15 +5,15 @@ Feature: View All Available Poster Designs
 
   Scenario: Display All Available Posters (Normal Flow)
     Given the following posters exist in the system
-      | title          | description              | price | imageData | user         |
-      | CoolPoster     | It's a cool poster!      | 1.00  | 1, 2, 3   | jeff@ap.com  |
-      | VeryCoolPoster | It's a very cool poster! | 1.55  | 1, 2, 4   | smith@ap.com |
+      | title          | description                     | price | imageData   | user         |
+      | CoolPoster     | It's a cool poster!             | 1.00  | 1, 2, 3     | jeff@ap.com  |
+      | VeryCoolPoster | It's a very cool poster!        | 1.55  | 1, 2, 4     | smith@ap.com |
       | Amazing Art    | A stunning piece of digital art | 5.00  | artwork.jpg | jeff@ap.com  |
     When the user is on the shop page
     Then they should see the following posters displayed
-      | title          | description              | price | imageData |
-      | CoolPoster     | It's a cool poster!      | 1.00  | 1, 2, 3   |
-      | VeryCoolPoster | It's a very cool poster! | 1.55  | 1, 2, 4   |
+      | title          | description                     | price | imageData   | user         |
+      | CoolPoster     | It's a cool poster!             | 1.00  | 1, 2, 3     | jeff@ap.com  |
+      | VeryCoolPoster | It's a very cool poster!        | 1.55  | 1, 2, 4     | smith@ap.com |
       | Amazing Art    | A stunning piece of digital art | 5.00  | artwork.jpg | jeff@ap.com  |
 
   Scenario: No Posters Available (Alternate Flow)
