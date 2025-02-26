@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -41,6 +40,8 @@ public class UploadPosterStepDefinitions {
         posterRepository.deleteAll();
         userRepository.deleteAll();
     }
+
+  
     @Given("the following users exist in the system")
     public void theFollowingUsersExistInTheSystem(DataTable dataTable) {
         clearDatabase();
@@ -53,6 +54,7 @@ public class UploadPosterStepDefinitions {
         }
     }
 
+
     @Given("the user is logged in as {string}")
     public void theUserIsLoggedInAs(String email) {
     loggedInUser = userRepository.findUserByEmail(email);
@@ -61,7 +63,6 @@ public class UploadPosterStepDefinitions {
     // Force initialization of lazy collections
     loggedInUser.getPosters().size();
     }
-
 
     @Given("the following posters exist in the system")
     public void theFollowingPostersExistInTheSystem(DataTable dataTable) {
@@ -85,6 +86,7 @@ public class UploadPosterStepDefinitions {
         // No action needed, just simulating the user navigation
     }
 
+    
     @When("he enters a title {string} and a description {string} and a price {float} and an image file {string}")
     public void heEntersPosterDetails(String title, String description, float price, String imageData) {
         assertNotNull(loggedInUser, "User must be logged in to upload a poster.");
@@ -98,7 +100,7 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @Transactional
+    
     @Then("the following posters shall exist in the system")
     public void theFollowingPostersShallExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> expectedPosters = dataTable.asMaps();
@@ -112,4 +114,58 @@ public class UploadPosterStepDefinitions {
         assertNotNull(controllerResponse.getBody(), "Error message should be present.");
         assertEquals(expectedErrorMessage, controllerResponse.getBody().toString(), "Error message mismatch.");
     }
+
+    @When("the user uploads a poster without an image")
+    public void theUserUploadsAPosterWithoutAnImage() {
+        assertNotNull(loggedInUser, "User must be logged in to upload a poster.");
+        PosterRequestDTO request = new PosterRequestDTO(
+            "Sample Title", 
+            "Sample Description", 
+            10.0f, 
+            null, // No image data provided
+            loggedInUser.getEmail()
+        );
+        try {
+            controllerResponse = posterController.uploadPoster(request);
+        } catch (Exception e) {
+            controllerResponse = ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @Then("the user should see an error message {string}")
+    public void theUserShouldSeeAnErrorMessage(String expectedErrorMessage) {
+        assertEquals(400, controllerResponse.getStatusCode().value(), "Expected HTTP 400 error.");
+        assertNotNull(controllerResponse.getBody(), "Error message should be present.");
+        assertEquals(expectedErrorMessage, controllerResponse.getBody().toString(), "Error message mismatch.");
+    }
+
+
+    @When("the user uploads a poster with the same title as an existing one")
+    public void theUserUploadsAPosterWithTheSameTitleAsAnExistingOne() {
+        assertNotNull(loggedInUser, "User must be logged in to upload a poster.");
+        // First, create and save a poster with a unique title
+        Poster existingPoster = new Poster();
+        existingPoster.setTitle("Existing Title");
+        existingPoster.setDescription("Existing description");
+        existingPoster.setPrice(10.0f);
+        existingPoster.setImageData(Base64.getDecoder().decode("imageData"));
+        existingPoster.setUser(loggedInUser);
+        posterRepository.save(existingPoster);
+
+        // Try to upload a new poster with the same title
+        PosterRequestDTO request = new PosterRequestDTO(
+            "Existing Title",  // Duplicate title
+            "Another description",
+            15.0f,
+            Base64.getDecoder().decode("newImageData"),
+            loggedInUser.getEmail()
+        );
+
+        try {
+            controllerResponse = posterController.uploadPoster(request);
+        } catch (Exception e) {
+            controllerResponse = ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
