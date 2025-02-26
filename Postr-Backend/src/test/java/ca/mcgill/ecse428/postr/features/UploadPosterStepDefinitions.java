@@ -21,6 +21,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UploadPosterStepDefinitions {
 
@@ -42,7 +43,7 @@ public class UploadPosterStepDefinitions {
         userRepository.deleteAll();
     }
 
-    @Given("the following users exist in the system")
+    @Given("the following users exist in the system upload posters")
     public void theFollowingUsersExistInTheSystem(DataTable dataTable) {
         clearDatabase();
         List<Map<String, String>> rows = dataTable.asMaps();
@@ -54,7 +55,7 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @Given("the user is logged in as {string}")
+    @Given("the user is logged in as {string} upload posters")
     public void theUserIsLoggedInAs(String email) {
         loggedInUser = userRepository.findUserByEmail(email);
         assertNotNull(loggedInUser, "User must exist to log in.");
@@ -63,7 +64,7 @@ public class UploadPosterStepDefinitions {
         loggedInUser.getPosters().size();
     }
 
-    @Given("the following posters exist in the system")
+    @Given("the following posters exist in the system upload posters")
     public void theFollowingPostersExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps();
         for (var row : rows) {
@@ -79,7 +80,7 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @When("the user is on the shop page")
+    @When("the user is on the shop page upload poster")
     public void the_user_is_on_the_shop_page() {
         // Simulate navigation to the shop page
     }
@@ -100,7 +101,7 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @Given("the user is on the upload poster page")
+    @Given("the user is on the upload poster page upload posters")
     public void theUserIsOnTheUploadPosterPage() {
         // No action needed, just simulating the user navigation
     }
@@ -118,7 +119,7 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @Then("the following posters shall exist in the system")
+    @Then("the following posters shall exist in the system upload poster")
     public void theFollowingPostersShallExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> expectedPosters = dataTable.asMaps();
         List<Poster> actualPosters = posterRepository.findAll();
@@ -134,14 +135,14 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @Then("he should see an error message {string}")
+    @Then("he should see an error message {string} upload poster")
     public void heShouldSeeAnErrorMessage(String expectedErrorMessage) {
         assertEquals(400, controllerResponse.getStatusCode().value(), "Expected HTTP 400 error.");
         assertNotNull(controllerResponse.getBody(), "Error message should be present.");
         assertEquals(expectedErrorMessage, controllerResponse.getBody().toString(), "Error message mismatch.");
     }
 
-    @When("the user uploads a poster without an image")
+    @When("the user uploads a poster without an image upload poster")
     public void theUserUploadsAPosterWithoutAnImage() {
         assertNotNull(loggedInUser, "User must be logged in to upload a poster.");
         PosterRequestDTO request = new PosterRequestDTO(
@@ -158,7 +159,7 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @Then("the user should see an error message {string}")
+    @Then("the user should see an error message {string} upload poster")
     public void theUserShouldSeeAnErrorMessage(String expectedErrorMessage) {
         assertEquals(400, controllerResponse.getStatusCode().value(), "Expected HTTP 400 error.");
         assertNotNull(controllerResponse.getBody(), "Error message should be present.");
@@ -193,24 +194,24 @@ public class UploadPosterStepDefinitions {
         }
     }
 
-    @Given("there are no posters available in the system")
+    @Given("there are no posters available in the system upload poster")
     public void there_are_no_posters_available_in_the_system() {
         posterRepository.deleteAll();
     }
 
-    @When("the user navigates to the posters listing page")
+    @When("the user navigates to the posters listing page upload poster")
     public void the_user_navigates_to_the_posters_listing_page() {
         // Simulate navigation to the posters listing page
         controllerResponse = ResponseEntity.ok("No posters available at the moment");
     }
 
-    @When("the user is on the home page")
+    @When("the user is on the home page upload poster")
     public void the_user_is_on_the_home_page() {
         // Simulate navigation to the home page
         controllerResponse = ResponseEntity.ok("No posters available at the moment");
     }
 
-    @Then("they should see a message {string}")
+    @Then("they should see a message {string} upload poster")
     public void they_should_see_a_message(String expectedMessage) {
         // Verify that the message is displayed
         // This would typically involve checking the response from a controller or service
@@ -219,7 +220,7 @@ public class UploadPosterStepDefinitions {
         assertEquals(expectedMessage, controllerResponse.getBody().toString(), "Message mismatch.");
     }
 
-    @Then("they should see the following posters displayed in the featured section")
+    @Then("they should see the following posters displayed in the featured section upload poster")
     public void they_should_see_the_following_posters_displayed_in_the_featured_section(DataTable dataTable) {
         List<Map<String, String>> expectedPosters = dataTable.asMaps();
         List<Poster> actualPosters = posterRepository.findAll();
