@@ -12,6 +12,7 @@
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/shop">Shop</router-link></li>
       <li><router-link to="/my-posters">My posters</router-link></li>
+      
 
     </ul>
 
@@ -25,8 +26,13 @@
   </nav>
 </template>
 
+import { state } from '../stores/state';
+
 <script>
 export default {
+  setup() {
+    return { state };
+  },
   name: 'NavBar',
   methods: {
     handleSignOut() {
