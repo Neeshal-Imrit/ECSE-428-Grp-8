@@ -21,6 +21,7 @@
         Don't have an account?
         <router-link to="/signup">Sign up here</router-link>
       </p>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </div>
 
     <!-- right side - image -->
@@ -31,21 +32,43 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { login, isLoggedIn } from '@/auth';
+
 export default {
   name: "SigninView",
-  data() {
-    return {
-      email: "",
-      password: "",
+  setup() {
+    const email = ref("");
+    const password = ref("");
+    const errorMessage = ref("");
+    const router = useRouter();
+
+    const submitForm = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/login/${email.value}/${password.value}`);
+        if (response.data) {
+          console.log('Login successful:', response.data);
+          login(email.value);
+          router.push('/');
+        } else {
+          console.error('Invalid email or password');
+          errorMessage.value = "Incorrect email or password";
+        }
+      } catch (error) {
+        console.error('Error logging in:', error.response.data);
+        errorMessage.value = "Incorrect email or password";
+      }
     };
-  },
-  methods: {
-    submitForm() {
-      // Handle form submission. This is a placeholder. Can remove when you connect to backend.
-      // Not supposed to log in final version
-      console.log("Email:", this.email);
-      console.log("Password:", this.password);
-    },
+
+    return {
+      email,
+      password,
+      submitForm,
+      errorMessage,
+      isLoggedIn,
+    };
   },
 };
 </script>
@@ -149,5 +172,10 @@ button:hover {
 
 button:active {
   background-color: #2088c9;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>
