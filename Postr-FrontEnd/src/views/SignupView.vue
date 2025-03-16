@@ -22,25 +22,41 @@
           <button type="submit">Sign Up</button>
         </div>
       </form>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "SignupView",
   data() {
     return {
       email: "",
       password: "",
+      errorMessage: "",
     };
   },
   methods: {
-    submitForm() {
-      // Handle form submission. This is a placeholder. Can remove when you connect to backend.
-      // Not supposed to log in final version
-      console.log("Email:", this.email);
-      console.log("Password:", this.password);
+    async submitForm() {
+      try {
+        const response = await axios.post(`http://localhost:8080/users`, {
+          email: this.email,
+          password: this.password
+        });
+        console.log('User created successfully:', response.data);
+       
+        this.email = "";
+        this.password = "";
+        this.errorMessage = "";
+        this.$router.push('/signin');
+        
+      } catch (error) {
+        console.error('Error creating user:', error.response.data);
+        this.errorMessage = error.response.data.error || 'An error occurred while creating the user.';
+      }
     },
   },
 };
@@ -149,5 +165,10 @@ button:hover {
 
 button:active {
   background-color: #2088c9;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>
