@@ -26,5 +26,8 @@ body {
   color: #333;
   margin: 0;
   font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  width: 100%; /* Ensure full width */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 </style>
