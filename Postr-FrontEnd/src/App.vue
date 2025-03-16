@@ -26,5 +26,8 @@ body {
   color: #333;
   margin: 0;
   font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>
