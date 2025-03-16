@@ -27,7 +27,7 @@ body {
   margin: 0;
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
-  width: 100%; /* Ensure full width */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>
