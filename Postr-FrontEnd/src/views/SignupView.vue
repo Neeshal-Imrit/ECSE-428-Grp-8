@@ -22,6 +22,7 @@
           <button type="submit">Sign Up</button>
         </div>
       </form>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
@@ -35,6 +36,7 @@ export default {
     return {
       email: "",
       password: "",
+      errorMessage: "",
     };
   },
   methods: {
@@ -48,10 +50,12 @@ export default {
        
         this.email = "";
         this.password = "";
+        this.errorMessage = "";
         this.$router.push('/signin');
         
       } catch (error) {
         console.error('Error creating user:', error.response.data);
+        this.errorMessage = error.response.data.error || 'An error occurred while creating the user.';
       }
     },
   },
@@ -161,5 +165,10 @@ button:hover {
 
 button:active {
   background-color: #2088c9;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>
