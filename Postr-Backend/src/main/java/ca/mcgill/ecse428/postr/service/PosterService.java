@@ -89,4 +89,14 @@ public class PosterService {
         posterRepository.save(poster);
         return poster;
     }
+
+    @Transactional
+    public void deletePosterById(Long id) {
+        Poster poster = findPosterById(id);
+        if (poster == null) {
+            throw new PostrException(HttpStatus.NOT_FOUND, "Poster not found");
+        }
+        posterRepository.delete(poster);
+    }
+
 }

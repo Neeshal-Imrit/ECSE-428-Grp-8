@@ -4,6 +4,7 @@
     <NewArrival />
     <BrowseRange />
     <OurProducts />
+    <UploadPoster />
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import NewArrival from "@/components/NewArrival.vue";
 import BrowseRange from "@/components/BrowseRange.vue";
 import OurProducts from "@/components/OurProducts.vue";
+import UploadPoster from "@/components/UploadPoster.vue";
 
 export default {
   name: "HomeView",
@@ -18,6 +20,7 @@ export default {
     NewArrival,
     BrowseRange,
     OurProducts,
+    UploadPoster,
   },
 };
 </script>

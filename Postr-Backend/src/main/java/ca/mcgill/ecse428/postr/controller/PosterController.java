@@ -93,4 +93,15 @@ public class PosterController {
                                                     posterRequestDTO.getTitle());
         return ResponseEntity.ok(new PosterResponseDTO(poster));
     }
+
+    /**
+     * DELETE /posters/id/{id}
+     * Delete a poster.
+     */
+    @DeleteMapping("/posters/id/{id}")
+    public ResponseEntity<Void> deletePosterById(@PathVariable Long id) {
+        posterService.deletePosterById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

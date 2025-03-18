@@ -47,6 +47,18 @@ export const usePosterStore = defineStore('poster', {
       } finally {
         this.loading = false;
       }
+    },
+    async deletePoster(id) {
+      this.loading = true;
+      this.error = null;
+      try {
+        await axios.delete(`http://localhost:8080/posters/id/${id}`);
+        this.posters = this.posters.filter((poster) => poster.id !== id);
+      } catch (err) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
     }
   }
 });
