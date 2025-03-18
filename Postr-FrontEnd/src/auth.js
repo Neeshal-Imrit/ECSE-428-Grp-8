@@ -1,15 +1,18 @@
 import { ref } from 'vue';
 
-const isLoggedIn = ref(localStorage.getItem('userEmail') !== null);
+const userEmail = ref(localStorage.getItem('userEmail') || null);
+const isLoggedIn = ref(userEmail.value !== null);
 
 const login = (email) => {
   localStorage.setItem('userEmail', email);
+  userEmail.value = email;
   isLoggedIn.value = true;
 };
 
 const logout = () => {
   localStorage.removeItem('userEmail');
+  userEmail.value = null;
   isLoggedIn.value = false;
 };
 
-export { isLoggedIn, login, logout };
+export { userEmail, isLoggedIn, login, logout };
