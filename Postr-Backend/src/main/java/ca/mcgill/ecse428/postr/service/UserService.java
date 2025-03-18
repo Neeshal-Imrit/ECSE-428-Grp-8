@@ -33,6 +33,11 @@ public class UserService {
             throw new PostrException(HttpStatus.BAD_REQUEST, "Invalid email");
         }
 
+        // Validate if the email is already in use
+        if (userRepository.findUserByEmail(email) != null) {
+            throw new PostrException(HttpStatus.BAD_REQUEST, "Email already in use");
+        }
+
         User user = new User(email, password);
         return userRepository.save(user);
     }
