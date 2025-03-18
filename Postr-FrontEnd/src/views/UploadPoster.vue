@@ -1,31 +1,36 @@
 <template>
   <div class="upload-poster-page">
+    <h1 class="page-title">Upload Poster</h1>
+
     <div class="upload-poster-container">
-      <!-- Left side: Image upload area -->
+      <!-- Left Column: Image Upload -->
       <div class="upload-area">
         <div class="image-placeholder" @click="triggerFileInput">
-          <p>Add picture</p>
-          <input 
+          <!-- Hidden file input -->
+          <input
             type="file"
             ref="fileInput"
             @change="handleFileUpload"
             accept="image/*"
           />
-        </div>
-        <div v-if="previewImage" class="preview-container">
-          <img :src="previewImage" alt="preview" />
+          <!-- Conditionally render the preview image or the placeholder text -->
+          <template v-if="previewImage">
+            <img :src="previewImage" alt="preview" class="preview-image" />
+          </template>
+          <template v-else>
+            <p>Add picture</p>
+          </template>
         </div>
       </div>
 
-      <!-- Right side: form fields -->
+      <!-- Right Column: Poster Form -->
       <div class="form-area">
-        <h1>Upload poster</h1>
         <form @submit.prevent="handleSubmit" class="poster-form">
           <div class="form-group">
             <label for="title">Title</label>
-            <input 
+            <input
               id="title"
-              v-model="title" 
+              v-model="title"
               type="text"
               placeholder="Enter poster title"
               required
@@ -45,7 +50,7 @@
 
           <div class="form-group">
             <label for="price">Price</label>
-            <input 
+            <input
               id="price"
               v-model="price"
               type="number"
@@ -61,26 +66,24 @@
       </div>
     </div>
 
-    <!-- Use the separate Footer component here -->
+    <!-- Footer (component, if you have it) -->
     <FooterComponent />
   </div>
 </template>
 
 <script>
-import FooterComponent from "@/components/Footer.vue"; 
-// Adjust the path above to match your folder structure
+import axios from 'axios';
+import FooterComponent from '@/components/Footer.vue';
 
 export default {
-  name: "UploadPoster",
-  components: {
-    FooterComponent,
-  },
+  name: 'UploadPoster',
+  components: { FooterComponent },
   data() {
     return {
-      title: "",
-      description: "",
-      price: "",
-      previewImage: null,
+      title: '',
+      description: '',
+      price: '',
+      previewImage: null, // will hold the data URL of the uploaded image
       imageFile: null,
     };
   },
@@ -93,6 +96,7 @@ export default {
       if (!file) return;
 
       this.imageFile = file;
+
       const reader = new FileReader();
       reader.onload = (e) => {
         this.previewImage = e.target.result;
@@ -100,22 +104,34 @@ export default {
       reader.readAsDataURL(file);
     },
     handleSubmit() {
-      const formData = new FormData();
-      formData.append("title", this.title);
-      formData.append("description", this.description);
-      formData.append("price", this.price);
-      if (this.imageFile) {
-        formData.append("image", this.imageFile);
+      let base64Data = null;
+      if (this.previewImage) {
+        base64Data = this.previewImage.split(',')[1];
       }
 
-      // e.g. axios.post("/api/posters", formData)...
-      // Clear form after submit (optional)
-      this.title = "";
-      this.description = "";
-      this.price = "";
-      this.imageFile = null;
-      this.previewImage = null;
-      alert("Poster submitted!");
+      const requestBody = {
+        title: this.title,
+        description: this.description,
+        price: parseFloat(this.price),
+        imageData: base64Data,
+        userEmail: 'john.doe@example.com'
+      };
+
+      axios.post('http://localhost:8080/posters', requestBody)
+        .then(response => {
+          console.log('Poster created successfully:', response.data);
+          alert('Poster uploaded!');
+          // Clear the form fields
+          this.title = '';
+          this.description = '';
+          this.price = '';
+          this.previewImage = null;
+          this.imageFile = null;
+        })
+        .catch(error => {
+          console.error('Error uploading poster:', error);
+          alert('Error uploading poster. Please try again.');
+        });
     },
   },
 };
@@ -123,26 +139,28 @@ export default {
 
 <style scoped>
 .upload-poster-page {
-  width: 100%;
-  /* min-height: 100vh;
-  margin: 0;
+  min-height: 100vh;
   padding-top: 80px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box; */
 }
 
-/* Container: full width */
+.page-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
 .upload-poster-container {
-  /* display: flex;
-  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1000px;
   width: 100%;
-  margin: 0;
-  padding: 1rem;
+  padding: 0 2rem 2rem;
   box-sizing: border-box;
-  gap: 2rem; */
-  width: 100%;
 }
 
 .upload-area {
@@ -162,9 +180,11 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  text-align: center;
+  overflow: hidden;
 }
 
-.image-placeholder input[type="file"] {
+.image-placeholder input[type='file'] {
   display: none;
 }
 
@@ -173,24 +193,15 @@ export default {
   color: #555;
 }
 
-.preview-container {
-  margin-top: 1rem;
+.preview-image {
   width: 100%;
-  max-width: 400px;
-}
-
-.preview-container img {
-  width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .form-area {
   flex: 1;
-}
-
-.form-area h1 {
-  margin-bottom: 1rem;
 }
 
 .poster-form {
