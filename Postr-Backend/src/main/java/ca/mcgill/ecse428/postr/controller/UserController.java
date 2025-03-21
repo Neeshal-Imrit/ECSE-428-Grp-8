@@ -4,6 +4,7 @@ package ca.mcgill.ecse428.postr.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import ca.mcgill.ecse428.postr.dto.UserRequestDTO;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
     
     @Autowired
@@ -46,12 +48,9 @@ public class UserController {
     
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        try {
-            return new ResponseEntity<>(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-        
+
+        return ResponseEntity.ok(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())));
+
     }
 
     @GetMapping("/login/{email}/{password}")

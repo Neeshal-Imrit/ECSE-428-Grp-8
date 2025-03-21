@@ -12,7 +12,9 @@
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/shop">Shop</router-link></li>
       <li><router-link to="/my-posters">My posters</router-link></li>
-
+      <li v-if="!isLoggedIn"><router-link to="/signup">Sign Up</router-link></li>
+      <li v-if="!isLoggedIn"><router-link to="/signin">Sign In</router-link></li>
+      <li v-if="isLoggedIn"><button class="sign-out-button" @click="signOut">Sign Out</button></li>
     </ul>
 
     <!-- Actions -->
@@ -20,21 +22,30 @@
       <router-link to="/favorites" class="navbar__icon">
         <i class="icon-heart"></i>
       </router-link>
-      <button class="navbar__signout" @click="handleSignOut">Sign out</button>
     </div>
   </nav>
 </template>
 
 <script>
+import { isLoggedIn, logout } from '@/auth';
+import { useRouter } from 'vue-router';
+
 export default {
-  name: 'NavBar',
-  methods: {
-    handleSignOut() {
-      // Your sign-out logic
-      alert('Signed out!');
-    }
-  }
-}
+  name: 'NavigationBar',
+  setup() {
+    const router = useRouter();
+
+    const signOut = () => {
+      logout();
+      router.push('/signin');
+    };
+
+    return {
+      isLoggedIn,
+      signOut,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -77,5 +88,25 @@ export default {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+button {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+.sign-out-button {
+  color: red;
+}
+
+.sign-out-button:hover {
+  text-decoration: underline;
 }
 </style>

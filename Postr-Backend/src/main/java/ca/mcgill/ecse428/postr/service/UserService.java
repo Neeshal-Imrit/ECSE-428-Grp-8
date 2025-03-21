@@ -1,9 +1,11 @@
 package ca.mcgill.ecse428.postr.service;
 import ca.mcgill.ecse428.postr.dao.UserRepository;
+import ca.mcgill.ecse428.postr.exception.PostrException;
 import jakarta.transaction.Transactional;
 import ca.mcgill.ecse428.postr.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,12 +25,17 @@ public class UserService {
     public User createUser(String email, String password) {
         // Validate if the password is strong enough
         if (password.length() < 8) {
-            throw new IllegalArgumentException("Password must be at least 8 characters long");
+            throw new PostrException(HttpStatus.BAD_REQUEST, "Password must be at least 8 characters long");
         }
 
         // Validate if the email is valid
         if (!email.contains("@")) {
-            throw new IllegalArgumentException("Invalid email");
+            throw new PostrException(HttpStatus.BAD_REQUEST, "Invalid email");
+        }
+
+        // Validate if the email is already in use
+        if (userRepository.findUserByEmail(email) != null) {
+            throw new PostrException(HttpStatus.BAD_REQUEST, "Email already in use");
         }
 
         User foundUser = userRepository.findUserByEmail(email);
