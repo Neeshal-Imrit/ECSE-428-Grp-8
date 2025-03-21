@@ -7,6 +7,10 @@ import ca.mcgill.ecse428.postr.service.PosterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ca.mcgill.ecse428.postr.dto.ErrorDTO;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,12 +99,16 @@ public class PosterController {
     }
 
     /**
-     * POST /posters/buy
+     * PUT /posters/buy
      * Buy a poster.
      */
-    @PostMapping("/posters/buy")
-    public ResponseEntity<PosterResponseDTO> buyPoster(@RequestBody PosterRequestDTO posterRequestDTO) {
-        Poster poster = posterService.buyPoster(posterRequestDTO.getUserId(), posterRequestDTO.getPosterId());
-        return ResponseEntity.ok(new PosterResponseDTO(poster));
+    @PutMapping("/posters/buy/{posterId}")
+    public ResponseEntity<?> buyPoster(@PathVariable Long posterId) {
+        try {
+            Poster poster = posterService.buyPoster(posterId);
+            return new ResponseEntity<>(new PosterResponseDTO(poster), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 }
