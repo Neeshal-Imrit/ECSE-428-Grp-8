@@ -13,7 +13,6 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 
 import java.util.List;
@@ -60,7 +59,6 @@ public class UploadPosterStepDefinitions {
         loggedInUser = userRepository.findUserByEmail(email);
         assertNotNull(loggedInUser, "User must exist to log in.");
         // Force initialization of lazy collections
-        
         loggedInUser.getPosters().size();
     }
 
@@ -74,7 +72,6 @@ public class UploadPosterStepDefinitions {
             poster.setPrice(Float.parseFloat(row.get("price")));
             poster.setUrl(row.get("imageData"));
             User user = userRepository.findUserByEmail(row.get("user"));
-            //assertNotNull(user, "Poster must have a valid user.");
             poster.setUser(user);
             posterRepository.save(poster);
         }
@@ -123,7 +120,6 @@ public class UploadPosterStepDefinitions {
     public void theFollowingPostersShallExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> expectedPosters = dataTable.asMaps();
         List<Poster> actualPosters = posterRepository.findAll();
-        //assertEquals(expectedPosters.size(), actualPosters.size(), "Mismatch in expected and actual posters.");
         for (int i = 0; i < expectedPosters.size(); i++) {
             Map<String, String> expectedPoster = expectedPosters.get(i);
             Poster actualPoster = actualPosters.get(i);
@@ -169,20 +165,11 @@ public class UploadPosterStepDefinitions {
     @When("the user uploads a poster with the same title as an existing one")
     public void theUserUploadsAPosterWithTheSameTitleAsAnExistingOne() {
         assertNotNull(loggedInUser, "User must be logged in to upload a poster.");
-        // First, create and save a poster with a unique title
-        Poster existingPoster = new Poster();
-        existingPoster.setTitle("Existing Title");
-        existingPoster.setDescription("Existing description");
-        existingPoster.setPrice(10.0f);
-        existingPoster.setUrl("existingImageData");
-        existingPoster.setUser(loggedInUser);
-        posterRepository.save(existingPoster);
-
         // Try to upload a new poster with the same title
         PosterRequestDTO request = new PosterRequestDTO(
-            "Existing Title",  // Duplicate title
+            "CoolPoster",  // Duplicate title
             "Another description",
-            15.0f,
+            15f,
             "newImageData",
             loggedInUser.getEmail()
         );

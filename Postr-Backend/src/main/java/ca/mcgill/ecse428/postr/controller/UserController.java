@@ -43,13 +43,17 @@ public class UserController {
         } catch (Exception e) {
             throw new IllegalArgumentException("User not found");
         }
-        
+
     }
-    
+
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody UserRequestDTO userRequestDTO) {
 
-        return ResponseEntity.ok(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())));
+        try {
+            return new ResponseEntity<>(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
 
     }
 

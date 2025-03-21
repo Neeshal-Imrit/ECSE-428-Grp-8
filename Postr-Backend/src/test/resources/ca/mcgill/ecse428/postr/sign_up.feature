@@ -21,7 +21,7 @@ Feature: User Sign Up
   Scenario: Sign up with an already registered email (Error Flow)
     Given the user is on the sign-up page
     When he enters an email "jeff@ap.com" that is already registered and he enters a password "SecurePass123"
-    Then he should see an error message sign up "Email already exists"
+    Then he should see an error message sign up "Email already in use"
     And the following users shall exist in the system
       | email               | password      | 
       | jeff@ap.com         | password1     |

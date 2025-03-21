@@ -72,7 +72,6 @@ And the following posters shall exist in the system upload poster
       | title          | description                     | price | imageData                                                                                             | user         |
       | CoolPoster     | It's a cool poster!             | 1.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
       | VeryCoolPoster | It's a very cool poster!        | 1.55  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | smith@ap.com |
-      | Amazing Art    | A stunning piece of digital art | 5.00  | iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVR42mP8/5+hP6MggIMAAP9cAv52kBLqAAAAAElFTkSuQmCC  | jeff@ap.com  |
 
 
 
