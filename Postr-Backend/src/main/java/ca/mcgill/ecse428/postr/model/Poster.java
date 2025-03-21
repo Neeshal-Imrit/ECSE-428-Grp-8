@@ -151,4 +151,5 @@ public class Poster {
         + System.getProperties().getProperty("line.separator") +
         "  " + "user = " + (getUser() != null ? Integer.toHexString(System.identityHashCode(getUser())) : "null");
   }
+
 }

@@ -7,13 +7,13 @@ public class PosterResponseDTO {
     private String title;
     private String description;
     private float price;
-    private byte[] imageData;
+    private String imageData;
     private String userEmail;
 
     private PosterResponseDTO() {
     }
 
-    public PosterResponseDTO(String title, String description, float price, byte[] imageData, String userEmail) {
+    public PosterResponseDTO(String title, String description, float price, String imageData, String userEmail) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -25,7 +25,7 @@ public class PosterResponseDTO {
         this.title = poster.getTitle();
         this.description = poster.getDescription();
         this.price = poster.getPrice();
-        this.imageData = poster.getImageData();
+        this.imageData = poster.getUrl();
         this.userEmail = poster.getUser().getEmail();
     }
 
@@ -41,7 +41,7 @@ public class PosterResponseDTO {
         return this.price;
     }
 
-    public byte[] getImageData() {
+    public String getUrl() {
         return this.imageData;
     }
 
