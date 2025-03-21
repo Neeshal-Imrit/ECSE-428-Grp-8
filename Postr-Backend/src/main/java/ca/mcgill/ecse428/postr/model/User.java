@@ -19,6 +19,7 @@ public class User
   private Long id;
   private String email;
   private String password;
+  private List<Poster>postersPurchased;
 
   //User Associations
   @OneToMany(mappedBy = "user")
@@ -36,6 +37,8 @@ public class User
     email = aEmail;
     password = aPassword;
     posters = new ArrayList<Poster>();
+    postersPurchased = new ArrayList<Poster>();
+
   }
 
   //------------------------
@@ -131,6 +134,30 @@ public class User
     wasAdded = true;
     return wasAdded;
   }
+
+  public boolean addPosterPurchase(Poster aPoster){
+    boolean wasAdded = false;
+    if (postersPurchased.contains(aPoster)) { return false; }
+    User existingUser = aPoster.getUser();
+    boolean isNewUser = existingUser != null && !this.equals(existingUser);
+    if (isNewUser)
+    {
+      aPoster.setUser(this);
+    }
+    else
+    {
+      postersPurchased.add(aPoster);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public List<Poster> getPostersPurchased(){
+    List<Poster> newPosters = Collections.unmodifiableList(postersPurchased);
+    return newPosters;
+  }
+
+
 
   public boolean removePoster(Poster aPoster)
   {

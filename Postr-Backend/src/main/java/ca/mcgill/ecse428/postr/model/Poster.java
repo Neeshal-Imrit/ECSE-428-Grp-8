@@ -67,6 +67,9 @@ public class Poster {
 
   private float price;
 
+  private int numPurchases;
+
+
   @Column(columnDefinition = "BYTEA")
   private byte[] imageData; 
 
@@ -85,6 +88,7 @@ public class Poster {
       throw new RuntimeException(
           "Unable to create poster due to user. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+    numPurchases = 0;
   }
 
   // ------------------------
@@ -141,6 +145,17 @@ public class Poster {
     if (placeholderUser != null) {
       placeholderUser.removePoster(this);
     }
+  }
+
+  public int getNumPurchases(){
+    return numPurchases;
+  }
+
+  public boolean addPurchase(){
+    boolean wasAdded = false;
+    numPurchases += 1;
+    wasAdded = true;
+    return wasAdded;
   }
 
   public String toString() {
