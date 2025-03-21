@@ -93,4 +93,14 @@ public class PosterController {
                                                     posterRequestDTO.getTitle());
         return ResponseEntity.ok(new PosterResponseDTO(poster));
     }
+
+    /**
+     * POST /posters/buy
+     * Buy a poster.
+     */
+    @PostMapping("/posters/buy")
+    public ResponseEntity<PosterResponseDTO> buyPoster(@RequestBody PosterRequestDTO posterRequestDTO) {
+        Poster poster = posterService.buyPoster(posterRequestDTO.getUserId(), posterRequestDTO.getPosterId());
+        return ResponseEntity.ok(new PosterResponseDTO(poster));
+    }
 }

@@ -88,4 +88,13 @@ public class PosterService {
 
         return posterRepository.save(poster);
     }
+
+    @Transactional
+    public void buyPoster(Long id){
+        Poster boughtPoster = posterRepository.findPosterById(id);
+        if(boughtPoster == null){
+            throw new PostrException(HttpStatus.BAD_REQUEST, "The poster does not exist");
+        }
+        boughtPoster.addPurchase();
+    }
 }
