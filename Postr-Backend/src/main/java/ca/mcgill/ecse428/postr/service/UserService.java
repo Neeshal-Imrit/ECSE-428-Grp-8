@@ -77,7 +77,7 @@ public class UserService {
     }
 
     @Transactional
-    public void buyPoster(Long userId, Long posterId) {
+    public void purchasePoster(Long userId, Long posterId) {
         User user = userRepository.findUserById(userId);
         if (user == null) {
             throw new IllegalArgumentException("Invalid user id");
