@@ -2,12 +2,7 @@ package ca.mcgill.ecse428.postr.model;
 
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -27,7 +22,7 @@ public class User
 
   //User Associations
   @OneToMany(mappedBy = "user")
-  private List<Poster> posters;
+  public List<Poster> posters;
 
   //------------------------
   // CONSTRUCTOR

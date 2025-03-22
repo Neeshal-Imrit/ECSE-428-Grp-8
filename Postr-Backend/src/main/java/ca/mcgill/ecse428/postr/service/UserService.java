@@ -38,6 +38,11 @@ public class UserService {
             throw new PostrException(HttpStatus.BAD_REQUEST, "Email already in use");
         }
 
+        User foundUser = userRepository.findUserByEmail(email);
+        if (foundUser != null){
+            throw new IllegalArgumentException("Email already exists");
+        }
+
         User user = new User(email, password);
         return userRepository.save(user);
     }
@@ -52,17 +57,13 @@ public class UserService {
     public Long logIn(String email, String password) {
         User user = userRepository.findUserByEmail(email);
         if (user == null) {
-            return null;
+            throw new IllegalArgumentException("Invalid email");
         }
         // ONLY ADDED this
         if (!user.getPassword().equals(password)) {
-            throw new IllegalArgumentException("Invalid email or password");
-        }
-
-        if  (user.getPassword().equals(password)) {
-            return user.getId();
+            throw new IllegalArgumentException("Invalid password");
         } else {
-            return null;
+            return user.getId();
         }
     }
 
@@ -70,5 +71,5 @@ public class UserService {
     public User getUserById(Long id) {
         return userRepository.findUserById(id);
     }
-    
+
 }

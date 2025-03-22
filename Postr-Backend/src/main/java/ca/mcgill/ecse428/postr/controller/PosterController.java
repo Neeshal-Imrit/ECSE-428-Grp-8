@@ -87,7 +87,7 @@ public class PosterController {
     @PostMapping("/posters")
     public ResponseEntity<PosterResponseDTO> uploadPoster(@RequestBody PosterRequestDTO posterRequestDTO) {
         Poster poster = posterService.uploadPoster(posterRequestDTO.getUserEmail(),
-                                                    posterRequestDTO.getImageData(),
+                                                    posterRequestDTO.getUrl(),
                                                     posterRequestDTO.getPrice(),
                                                     posterRequestDTO.getDescription(),
                                                     posterRequestDTO.getTitle());
