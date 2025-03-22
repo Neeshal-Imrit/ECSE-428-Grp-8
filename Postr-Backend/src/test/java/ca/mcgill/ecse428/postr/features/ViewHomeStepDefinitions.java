@@ -50,11 +50,6 @@ public class ViewHomeStepDefinitions {
         // No action needed since this scenario only involves viewing posters.
     }
 
-    @Given("the user is logged in as {string}")
-    public void theUserIsLoggedInAs(String email) {
-        System.out.println("User logged in: " + email);
-    }
-
 
     @Given("the following posters exist in the system")
     public void theFollowingPostersExistInTheSystem(DataTable dataTable) {

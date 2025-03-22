@@ -21,5 +21,5 @@ Scenario: View poster details successfully (Normal Flow)
 Scenario: Attempt to view non-existent poster details (Error Flow)  
   Given the user is on the "Shop Posters" page  
   When they attempt to select a recently deleted poster "NonExistentPoster"  
-  Then they should see an error message "Poster not found"  
+  Then they should see an error "Poster not found"  
 
