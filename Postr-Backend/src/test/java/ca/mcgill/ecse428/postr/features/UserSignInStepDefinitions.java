@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserSignInStepDefinitions {
@@ -62,7 +63,7 @@ public class UserSignInStepDefinitions {
     @Then("he should be redirected to the home page")
     public void heShouldBeRedirectedToTheHomePage() {
         assertEquals(200, controllerResponse.getStatusCode().value());
-        assertEquals(true, controllerResponse.getBody()); // Assuming the body contains a message or redirection path
+        assertNotNull(controllerResponse.getBody());// Assuming the body contains a message or redirection path
     }
 
     @When("he enters an email {string} and an invalid password {string}")
