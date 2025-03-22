@@ -63,6 +63,17 @@ public class BuyPosterStepDefinitions {
             poster.setPrice(Float.parseFloat(row.get("price")));
             poster.setUrl(row.get("imageData"));
             poster.addPurchase();
+
+            // Set the owner of the poster if provided
+            String ownerEmail = row.get("user"); // Ensure this column matches the feature file
+            if (ownerEmail != null && !ownerEmail.isEmpty()) {
+                User owner = userRepository.findUserByEmail(ownerEmail);
+                assertNotNull(owner, "Owner user must exist in the database.");
+                poster.setUser(owner);
+            } else {
+                fail("Poster owner email is missing or empty.");
+            }
+
             posterRepository.save(poster);
         }
     }
@@ -108,7 +119,16 @@ public class BuyPosterStepDefinitions {
     @Then("they should see an error message {string}")
     public void theyShouldSeeAnErrorMessage(String expectedMessage) {
         assertNotNull(controllerResponse, "Response should not be null.");
-        assertEquals(expectedMessage, controllerResponse.getBody().toString(), "Error message mismatch.");
+        
+        Object responseBody = controllerResponse.getBody();
+        assertNotNull(responseBody, "Response body should not be null.");
+
+        // Handle ErrorDTO case
+        if (responseBody instanceof ca.mcgill.ecse428.postr.dto.ErrorDTO errorDTO) {
+            assertEquals(expectedMessage, errorDTO.getError(), "Error message mismatch.");
+        } else {
+            assertEquals(expectedMessage, responseBody.toString(), "Error message mismatch.");
+        }
     }
 
     @When("they purchase the poster {string}")
