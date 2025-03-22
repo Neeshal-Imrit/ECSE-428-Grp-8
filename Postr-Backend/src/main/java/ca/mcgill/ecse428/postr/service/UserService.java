@@ -47,18 +47,23 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
+
     @Transactional
-    public boolean logIn(String email, String password) {
+    public Long logIn(String email, String password) {
         User user = userRepository.findUserByEmail(email);
         if (user == null) {
-            return false;
+            return null;
         }
         // ONLY ADDED this
         if (!user.getPassword().equals(password)) {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        return user.getPassword().equals(password);
+        if  (user.getPassword().equals(password)) {
+            return user.getId();
+        } else {
+            return null;
+        }
     }
 
     @Transactional
