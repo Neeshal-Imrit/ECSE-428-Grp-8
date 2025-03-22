@@ -20,7 +20,7 @@ Scenario: Successful purchase (Normal Flow)
   Then the poster "CoolPoster" should have 1 purchase
 
 Scenario: Attempt to purchase the user's own poster (Error Flow)
-Given the user is logged in as "jeff@ap.com"
+Given the user is logged in as "jeff@ap.com" buy poster
 When they purchase the poster "CoolPoster"
 Then they should see an error message "You cannot buy a poster you own"
 

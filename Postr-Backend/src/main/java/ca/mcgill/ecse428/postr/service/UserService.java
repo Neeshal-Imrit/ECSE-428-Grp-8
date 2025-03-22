@@ -86,6 +86,9 @@ public class UserService {
         if (boughtPoster == null) {
             throw new IllegalArgumentException("Invalid poster id");
         }
+        if (boughtPoster.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("You cannot buy a poster you own");
+        }
         user.addPosterPurchase(boughtPoster);
 
     }

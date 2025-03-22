@@ -1,6 +1,7 @@
 package ca.mcgill.ecse428.postr.features;
 
 import ca.mcgill.ecse428.postr.controller.PosterController;
+import ca.mcgill.ecse428.postr.controller.UserController;
 import ca.mcgill.ecse428.postr.dao.PosterRepository;
 import ca.mcgill.ecse428.postr.dao.UserRepository;
 import ca.mcgill.ecse428.postr.model.Poster;
@@ -33,6 +34,9 @@ public class BuyPosterStepDefinitions {
     @Autowired
     private PosterController posterController;
 
+    @Autowired
+    private UserController userController;
+
     private ResponseEntity<?> controllerResponse;
     private User loggedInUser;
 
@@ -62,7 +66,6 @@ public class BuyPosterStepDefinitions {
             poster.setDescription(row.get("description"));
             poster.setPrice(Float.parseFloat(row.get("price")));
             poster.setUrl(row.get("imageData"));
-            poster.addPurchase();
 
             // Set the owner of the poster if provided
             String ownerEmail = row.get("user"); // Ensure this column matches the feature file
@@ -76,8 +79,6 @@ public class BuyPosterStepDefinitions {
             posterRepository.save(poster);
         }
     }
-
-    private static final Logger logger1 = LoggerFactory.getLogger(BuyPosterStepDefinitions.class);
 
     @Given("the user is logged in as {string} buy poster")
     public void theUserIsLoggedInAs(String email) {
@@ -118,7 +119,7 @@ public class BuyPosterStepDefinitions {
     @Then("they should see an error message {string}")
     public void theyShouldSeeAnErrorMessage(String expectedMessage) {
         assertNotNull(controllerResponse, "Response should not be null.");
-        
+
         Object responseBody = controllerResponse.getBody();
         assertNotNull(responseBody, "Response body should not be null.");
 
@@ -133,6 +134,6 @@ public class BuyPosterStepDefinitions {
     @When("they purchase the poster {string}")
     public void theyPurchaseTheirOwnPoster(String posterTitle) {
         Poster poster = posterRepository.findPosterByTitle(posterTitle);
-        controllerResponse = posterController.buyPoster(poster.getId());
+        controllerResponse = userController.purchasePoster(loggedInUser.getId(), poster.getId());
     }
 }
