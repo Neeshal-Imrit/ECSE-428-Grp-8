@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PurchasePosterStepDefinitions {
+public class BuyPosterStepDefinitions {
 
     @Autowired
     private PosterRepository posterRepository;
