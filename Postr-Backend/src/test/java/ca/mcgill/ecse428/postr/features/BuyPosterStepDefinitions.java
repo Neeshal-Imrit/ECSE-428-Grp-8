@@ -33,7 +33,7 @@ public class BuyPosterStepDefinitions {
     private ResponseEntity<?> controllerResponse;
     private User loggedInUser;
 
-    @Given("the following users exist in the system")
+    @Given("the following users exist in the system buy poster")
     public void theFollowingUsersExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps();
         for (var row : rows) {
@@ -44,7 +44,7 @@ public class BuyPosterStepDefinitions {
         }
     }
 
-    @Given("the following posters exist in the system")
+    @Given("the following posters exist in the system buy poster")
     public void theFollowingPostersExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps();
         for (var row : rows) {
@@ -58,7 +58,7 @@ public class BuyPosterStepDefinitions {
         }
     }
 
-    @Given("the user is logged in as {string}")
+    @Given("the user is logged in as {string} buy poster")
     public void theUserIsLoggedInAs(String email) {
         loggedInUser = userRepository.findUserByEmail(email);
         assertNotNull(loggedInUser, "User must exist to log in.");
