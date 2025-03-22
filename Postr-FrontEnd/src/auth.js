@@ -20,4 +20,4 @@ const logout = () => {
   isLoggedIn.value = false;
 };
 
-export { userEmail, isLoggedIn, login, logout };
+export { userEmail,userId, isLoggedIn, login, logout };
