@@ -41,6 +41,7 @@ export default {
   name: "SigninView",
   setup() {
     const email = ref("");
+    const userId = ref("");
     const password = ref("");
     const errorMessage = ref("");
     const router = useRouter();
@@ -50,7 +51,7 @@ export default {
         const response = await axios.get(`http://localhost:8080/login/${email.value}/${password.value}`);
         if (response.data) {
           console.log('Login successful:', response.data);
-          login(email.value);
+          login(email.value, response.data);
           router.push('/');
         } else {
           console.error('Invalid email or password');

@@ -60,7 +60,7 @@ public class UserController {
     @GetMapping("/login/{email}/{password}")
     public ResponseEntity<?> login(@PathVariable String email, @PathVariable String password) {
         try {
-            boolean response = userService.logIn(email, password);
+            Long response = userService.logIn(email, password);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
