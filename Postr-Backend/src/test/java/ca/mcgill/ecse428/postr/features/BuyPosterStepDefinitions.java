@@ -9,6 +9,9 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +36,14 @@ public class BuyPosterStepDefinitions {
     private ResponseEntity<?> controllerResponse;
     private User loggedInUser;
 
+    private void clearDatabase() {
+        posterRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
     @Given("the following users exist in the system buy poster")
     public void theFollowingUsersExistInTheSystem(DataTable dataTable) {
+        clearDatabase();
         List<Map<String, String>> rows = dataTable.asMaps();
         for (var row : rows) {
             User user = new User();
@@ -57,6 +66,8 @@ public class BuyPosterStepDefinitions {
             posterRepository.save(poster);
         }
     }
+
+    private static final Logger logger1 = LoggerFactory.getLogger(BuyPosterStepDefinitions.class);
 
     @Given("the user is logged in as {string} buy poster")
     public void theUserIsLoggedInAs(String email) {
