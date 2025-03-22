@@ -73,7 +73,6 @@ public class BuyPosterStepDefinitions {
             } else {
                 fail("Poster owner email is missing or empty.");
             }
-
             posterRepository.save(poster);
         }
     }

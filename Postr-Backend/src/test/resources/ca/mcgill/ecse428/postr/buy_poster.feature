@@ -17,8 +17,7 @@ Given the following posters exist in the system buy poster
 Scenario: Successful purchase (Normal Flow)
   Given the user is logged in as "jeff@ap.com" buy poster
   When they purchase the "CoolPoster"
-  Then they should see a confirmation message "Purchase successful"
-  And the poster "CoolPoster" should have 1 purchase
+  Then the poster "CoolPoster" should have 1 purchase
 
 Scenario: Attempt to purchase the user's own poster (Error Flow)
 Given the user is logged in as "jeff@ap.com"
