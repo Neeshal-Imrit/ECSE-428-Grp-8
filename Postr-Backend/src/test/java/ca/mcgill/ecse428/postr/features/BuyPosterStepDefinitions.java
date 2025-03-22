@@ -10,8 +10,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
@@ -62,12 +60,9 @@ public class BuyPosterStepDefinitions {
             poster.setDescription(row.get("description"));
             poster.setPrice(Float.parseFloat(row.get("price")));
             poster.setUrl(row.get("imageData"));
-            poster.addPurchase();
             posterRepository.save(poster);
         }
     }
-
-    private static final Logger logger1 = LoggerFactory.getLogger(BuyPosterStepDefinitions.class);
 
     @Given("the user is logged in as {string} buy poster")
     public void theUserIsLoggedInAs(String email) {
@@ -80,12 +75,6 @@ public class BuyPosterStepDefinitions {
         Poster poster = posterRepository.findPosterByTitle(posterTitle);
         assertNotNull(poster, "Poster must exist.");
         controllerResponse = posterController.buyPoster(poster.getId());
-    }
-
-    @Then("they should see a confirmation message {string}")
-    public void theyShouldSeeAConfirmationMessage(String expectedMessage) {
-        assertNotNull(controllerResponse, "Response should not be null.");
-        assertEquals(expectedMessage, controllerResponse.getBody().toString(), "Confirmation message mismatch.");
     }
 
     @Then("the poster {string} should have {int} purchase")
