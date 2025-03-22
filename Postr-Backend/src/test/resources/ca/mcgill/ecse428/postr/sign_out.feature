@@ -17,4 +17,4 @@ Then they should be redirected to the sign-in page
 Scenario: Sign-out attempt while already logged out (Error Flow)
 Given the user is not logged in
 When they attempt to sign out
-Then they should see a message "You are not signed in"
+Then they should see "You are not signed in"

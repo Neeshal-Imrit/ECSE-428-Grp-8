@@ -2,6 +2,7 @@ package ca.mcgill.ecse428.postr.features;
 
 import ca.mcgill.ecse428.postr.controller.UserController;
 import ca.mcgill.ecse428.postr.model.User;
+import ca.mcgill.ecse428.postr.dao.PosterRepository;
 import ca.mcgill.ecse428.postr.dao.UserRepository;
 import ca.mcgill.ecse428.postr.dto.ErrorDTO;
 import ca.mcgill.ecse428.postr.dto.UserRequestDTO;
@@ -10,6 +11,8 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import org.junit.jupiter.api.AfterAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +33,18 @@ public class UserSignUpStepDefinitions {
     private UserController userController;
 
     @Autowired
+private PosterRepository posterRepository;
+
+    @Autowired
     private UserService userService;
 
     private ResponseEntity<?> controllerResponse;
 
-    private void clearDatabase() {
+    @AfterAll
+    public void clearDatabase() {
+        // First delete posters
+        posterRepository.deleteAll();
+        // Then delete users
         userRepository.deleteAll();
     }
 
