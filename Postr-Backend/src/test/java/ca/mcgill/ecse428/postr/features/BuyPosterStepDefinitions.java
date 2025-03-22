@@ -98,6 +98,10 @@ public class BuyPosterStepDefinitions {
     @When("they purchase the deleted poster {string}")
     public void theyPurchaseTheDeletedPoster(String posterTitle) {
         Poster poster = posterRepository.findPosterByTitle(posterTitle);
+        if (poster == null) {
+            controllerResponse = ResponseEntity.badRequest().body("This poster is no longer available");
+            return;
+        }
         controllerResponse = posterController.buyPoster(poster.getId());
     }
 
