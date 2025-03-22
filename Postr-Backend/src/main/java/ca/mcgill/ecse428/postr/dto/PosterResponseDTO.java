@@ -9,16 +9,18 @@ public class PosterResponseDTO {
     private float price;
     private String imageData;
     private String userEmail;
+    private int numPurchases;
 
     private PosterResponseDTO() {
     }
 
-    public PosterResponseDTO(String title, String description, float price, String imageData, String userEmail) {
+    public PosterResponseDTO(String title, String description, float price, String imageData, String userEmail, int numPurchases) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.imageData = imageData;
         this.userEmail = userEmail;
+        this.numPurchases = numPurchases;
     }
 
     public PosterResponseDTO(Poster poster) {
@@ -27,6 +29,7 @@ public class PosterResponseDTO {
         this.price = poster.getPrice();
         this.imageData = poster.getUrl();
         this.userEmail = poster.getUser().getEmail();
+        this.numPurchases = poster.getNumPurchases();
     }
 
     public String getTitle() {
@@ -47,6 +50,10 @@ public class PosterResponseDTO {
 
     public String getUserEmail() {
         return this.userEmail;
+    }
+
+    public int getNumPurchases() {
+        return this.numPurchases;
     }
 
 }

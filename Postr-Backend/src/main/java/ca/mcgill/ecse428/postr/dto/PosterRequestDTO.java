@@ -6,13 +6,15 @@ public class PosterRequestDTO {
     private float price;
     private String imageData;
     private String userEmail;
+    private int numPurchases;
 
-    public PosterRequestDTO(String title, String description, float price, String imageData, String userEmail) {
+    public PosterRequestDTO(String title, String description, float price, String imageData, String userEmail, int numPurchases) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.imageData = imageData;
         this.userEmail = userEmail;
+        this.numPurchases =numPurchases;
     }
 
     public String getTitle() {
@@ -33,6 +35,10 @@ public class PosterRequestDTO {
 
     public String getUserEmail() {
         return this.userEmail;
+    }
+
+    public int getNumPurchases() {
+        return this.numPurchases;
     }
 
 

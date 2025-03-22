@@ -42,6 +42,7 @@ public class ViewHomeStepDefinitions {
 
     private void clearDatabase() {
         posterRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Given("the following users exist in the system")

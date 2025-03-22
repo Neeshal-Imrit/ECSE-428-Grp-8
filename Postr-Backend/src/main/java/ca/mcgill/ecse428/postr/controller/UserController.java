@@ -67,5 +67,14 @@ public class UserController {
         }
     }
 
+    @PostMapping("/users/{userId}/purchase/{posterId}")
+    public ResponseEntity<?> purchasePoster(@PathVariable Long userId, @PathVariable Long posterId) {
+        try {
+            userService.purchasePoster(userId, posterId);
+            return new ResponseEntity<>("Poster purchased successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
     
 }

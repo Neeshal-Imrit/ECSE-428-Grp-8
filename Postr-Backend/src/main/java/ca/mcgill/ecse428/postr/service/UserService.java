@@ -1,7 +1,9 @@
 package ca.mcgill.ecse428.postr.service;
 import ca.mcgill.ecse428.postr.dao.UserRepository;
+import ca.mcgill.ecse428.postr.dao.PosterRepository;
 import ca.mcgill.ecse428.postr.exception.PostrException;
 import jakarta.transaction.Transactional;
+import ca.mcgill.ecse428.postr.model.Poster;
 import ca.mcgill.ecse428.postr.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +21,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PosterRepository posterRepository;
 
 
     @Transactional
@@ -69,6 +74,23 @@ public class UserService {
     @Transactional
     public User getUserById(Long id) {
         return userRepository.findUserById(id);
+    }
+
+    @Transactional
+    public void purchasePoster(Long userId, Long posterId) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("Invalid user id");
+        }
+        Poster boughtPoster = posterRepository.findPosterById(posterId);
+        if (boughtPoster == null) {
+            throw new IllegalArgumentException("Invalid poster id");
+        }
+        if (boughtPoster.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("You cannot buy a poster you own");
+        }
+        user.addPosterPurchase(boughtPoster);
+
     }
 
 }

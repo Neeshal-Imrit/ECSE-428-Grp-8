@@ -107,7 +107,7 @@ public class UploadPosterStepDefinitions {
     public void heEntersPosterDetails(String title, String description, float price, String imageData) {
         assertNotNull(loggedInUser, "User must be logged in to upload a poster.");
         PosterRequestDTO request = new PosterRequestDTO(
-            title, description, price, imageData, loggedInUser.getEmail()
+            title, description, price, imageData, loggedInUser.getEmail(), 0
         );
         try {
             controllerResponse = posterController.uploadPoster(request);
@@ -146,7 +146,8 @@ public class UploadPosterStepDefinitions {
             "Sample Description", 
             10.0f, 
             null, // No image data provided
-            loggedInUser.getEmail()
+            loggedInUser.getEmail(),
+            0
         );
         try {
             controllerResponse = posterController.uploadPoster(request);
@@ -171,7 +172,8 @@ public class UploadPosterStepDefinitions {
             "Another description",
             15f,
             "newImageData",
-            loggedInUser.getEmail()
+            loggedInUser.getEmail(),
+            0
         );
 
         try {
