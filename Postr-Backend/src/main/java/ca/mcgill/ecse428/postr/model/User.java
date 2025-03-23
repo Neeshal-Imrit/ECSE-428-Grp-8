@@ -2,12 +2,7 @@ package ca.mcgill.ecse428.postr.model;
 
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -25,9 +20,12 @@ public class User
   private String email;
   private String password;
 
+  @OneToMany(mappedBy = "user")
+  private List<Poster>postersPurchased;
+
   //User Associations
   @OneToMany(mappedBy = "user")
-  private List<Poster> posters;
+  public List<Poster> posters;
 
   //------------------------
   // CONSTRUCTOR
@@ -41,6 +39,8 @@ public class User
     email = aEmail;
     password = aPassword;
     posters = new ArrayList<Poster>();
+    postersPurchased = new ArrayList<Poster>();
+
   }
 
   //------------------------
@@ -136,6 +136,30 @@ public class User
     wasAdded = true;
     return wasAdded;
   }
+
+  public boolean addPosterPurchase(Poster aPoster){
+    boolean wasAdded = false;
+    if (postersPurchased.contains(aPoster)) { return false; }
+    User existingUser = aPoster.getUser();
+    boolean isNewUser = existingUser != null && !this.equals(existingUser);
+    if (isNewUser)
+    {
+      aPoster.setUser(this);
+    }
+    else
+    {
+      postersPurchased.add(aPoster);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public List<Poster> getPostersPurchased(){
+    List<Poster> newPosters = Collections.unmodifiableList(postersPurchased);
+    return newPosters;
+  }
+
+
 
   public boolean removePoster(Poster aPoster)
   {

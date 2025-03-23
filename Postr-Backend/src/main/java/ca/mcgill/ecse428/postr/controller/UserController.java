@@ -43,25 +43,38 @@ public class UserController {
         } catch (Exception e) {
             throw new IllegalArgumentException("User not found");
         }
-        
+
     }
-    
+
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody UserRequestDTO userRequestDTO) {
 
-        return ResponseEntity.ok(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())));
+        try {
+            return new ResponseEntity<>(new UserResponseDTO(userService.createUser(userRequestDTO.getEmail(), userRequestDTO.getPassword())), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
 
     }
 
     @GetMapping("/login/{email}/{password}")
     public ResponseEntity<?> login(@PathVariable String email, @PathVariable String password) {
         try {
-            boolean response = userService.logIn(email, password);
+            Long response = userService.logIn(email, password);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 
+    @PostMapping("/users/{userId}/purchase/{posterId}")
+    public ResponseEntity<?> purchasePoster(@PathVariable Long userId, @PathVariable Long posterId) {
+        try {
+            userService.purchasePoster(userId, posterId);
+            return new ResponseEntity<>("Poster purchased successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
     
 }
