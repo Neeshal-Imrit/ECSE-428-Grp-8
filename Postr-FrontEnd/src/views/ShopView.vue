@@ -18,13 +18,6 @@
 
 
 <script>
-import imageOne from '@/assets/POSTER-be-brave.jpg';
-import imageTwo from '@/assets/POSTER-sun&blue.jpg';
-import imageThree from '@/assets/POSTER-holland-market.jpg';
-import imageFour from '@/assets/claudio-schwarz.jpg';
-import imageFive from '@/assets/jazmin-quaynor.jpg';
-import imageSix from '@/assets/mcgill-library.jpg';
-
 export default {
   name: 'shop',
   data() {
@@ -32,66 +25,17 @@ export default {
       posters: [],
       loading: true,
       error: null,
-      // Dummy posters data
-      dummyPosters: [
-        {
-          id: 1,
-          url: imageOne,
-          title: "Be Brave",
-          description: "A beautiful vintage poster.",
-          price: 19.99
-        },
-        {
-          id: 2,
-          url: imageTwo,
-          title: "Sun & Blue",
-          description: "A modern art poster with vibrant colors.",
-          price: 29.99
-        },
-        {
-          id: 3,
-          url: imageThree,
-          title: "Holland Market",
-          description: "A scenic view of nature.",
-          price: 15.99
-        },
-        {
-          id: 4,
-          url: imageFour,
-          title: "Claudio Schwarz",
-          description: "Privatsphare",
-          price: 20.99
-        },
-        {
-          id: 5,
-          url: imageFive,
-          title: "Jazmin Quaynor",
-          description: "Poster history",
-          price: 12.99
-        },
-        {
-          id: 6,
-          url: imageSix,
-          title: "Mcgill Library",
-          description: "A Mcgill Library poster",
-          price: 5.99
-        }
-      ]
     }
   },
   created() {
     // Uncomment the line below to fetch from backend
-    // this.fetchPosters();
-    
-    // For dummy data, comment out the fetch call and use dummyPosters
-    this.posters = this.dummyPosters;
-    this.loading = false;
+    this.fetchPosters();
   },
   methods: {
     async fetchPosters() {
       try {
         // Replace with your backend URL
-        const response = await fetch('http://localhost:8080/posters')
+        const response = await fetch('http://localhost:8080/users/68/purchases')
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
         }

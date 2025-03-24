@@ -8,6 +8,7 @@ import SignupView from "@/views/SignupView.vue";
 import SigninView from "@/views/SigninView.vue";
 import PosterDetail from "@/views/PosterDetail.vue";
 import UpdatePosterView from "@/views/UpdatePosterView.vue";
+import UserHistory from "@/views/PurchaseHistoryView.vue"
 
 const routes = [
   { path: "/", name: "home", component: HomeView },
@@ -20,6 +21,7 @@ const routes = [
   { path: "/signin", name: "signin", component: SigninView },
   { path: "/posterdetail", name: "posterdetail", component: PosterDetail },
   { path: "/updateposter", name: "updateposter", component: UpdatePosterView },
+  { path: "/purchasehistory/:userId", name: "PurchaseHistory", component: UserHistory, props: true },
 ];
 
 const router = createRouter({
