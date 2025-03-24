@@ -48,9 +48,17 @@ export default {
 
     const submitForm = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/login/${email.value}/${password.value}`);
+        const response = await axios.get(`http://localhost:8000/login/${email.value}/${password.value}`);
         if (response.data) {
           console.log('Login successful:', response.data);
+
+          console.log("RESPONSE DATA IS", response.data);
+          const userId = response.data.userId;
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("email", email.value);
+          console.log('Logged in as email:', localStorage.getItem("email"));
+          console.log('Logged in as user ID:', localStorage.getItem("userId"));
+
           login(email.value, response.data);
           router.push('/');
         } else {

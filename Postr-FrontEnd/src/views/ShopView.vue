@@ -77,21 +77,20 @@ export default {
           price: 5.99
         }
       ]
-    }
+    } 
   },
   created() {
     // Uncomment the line below to fetch from backend
     // this.fetchPosters();
-    
-    // For dummy data, comment out the fetch call and use dummyPosters
-    this.posters = this.dummyPosters;
+        // For dummy data, comment out the fetch call and use dummyPosters
+    //this.posters = this.dummyPosters;
     this.loading = false;
   },
   methods: {
     async fetchPosters() {
       try {
         // Replace with your backend URL
-        const response = await fetch('http://localhost:8080/posters')
+        const response = await fetch('http://localhost:8000/posters')
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
         }
@@ -110,9 +109,37 @@ export default {
         maximumFractionDigits: 2
       }).format(value);
     },
-    buyNow(poster) {
+    async buyNow(poster) {
       alert(`You have selected "${poster.title}" for ${this.formatPrice(poster.price)}.`);
-      // TODO: Implement actual checkout flow (e.g., navigate to a checkout page or open a payment modal)
+
+      try {
+
+        //get the user id with the email
+        try {
+          const email = localStorage.getItem("email");
+          const response = await fetch(`http://localhost:8000/users/${email}`);
+
+          const data = await response.json();
+          console.log("User Data:", data);
+          const userID = data.id;
+          console.log("User ID:", userID);
+        } catch (error) {
+          console.error("Error fetching user data:", error.message);
+        }
+        const response = await fetch('http://localhost:8080//posters/buy/{posterId}')
+        const responseBuyPoster = await fetch(`http://localhost:8080//users/${userID}/purchase/{posterId}`)
+
+
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        this.posters = await response.json()
+      } catch (err) {
+        this.error = err.message
+      } finally {
+        this.loading = false
+      }
     }
   }
 }

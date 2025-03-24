@@ -42,7 +42,7 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const response = await axios.post(`http://localhost:8080/users`, {
+        const response = await axios.post(`http://localhost:8000/users`, {
           email: this.email,
           password: this.password
         });

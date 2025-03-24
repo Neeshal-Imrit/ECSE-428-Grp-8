@@ -114,10 +114,11 @@ export default {
         description: this.description,
         price: parseFloat(this.price),
         imageData: base64Data,
-        userEmail: 'john.doe@example.com'
+        userEmail: localStorage.getItem("email")
       };
-
-      axios.post('http://localhost:8080/posters', requestBody)
+      
+      console.log('The user email isL:', localStorage.getItem("email"));
+      axios.post('http://localhost:8000/posters', requestBody)
         .then(response => {
           console.log('Poster created successfully:', response.data);
           alert('Poster uploaded!');

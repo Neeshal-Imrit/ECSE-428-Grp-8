@@ -121,7 +121,7 @@ export default {
       };
 
       axios
-        .put(`http://localhost:8080/posters/${poster.id}`, requestBody)
+        .put(`http://localhost:8000/posters/${poster.id}`, requestBody)
         .then((response) => {
           console.log("Poster updated successfully:", response.data);
           alert("Poster updated!");
