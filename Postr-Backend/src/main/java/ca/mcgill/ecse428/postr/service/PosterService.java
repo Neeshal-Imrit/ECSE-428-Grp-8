@@ -100,7 +100,7 @@ public class PosterService {
     }
 
     @Transactional
-    public void deletePosterById(Long id) {
+    public void deletePoster(Long id) {
         Poster poster = findPosterById(id);
         if (poster == null) {
             throw new PostrException(HttpStatus.NOT_FOUND, "Poster not found");

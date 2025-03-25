@@ -103,10 +103,10 @@ public class PosterController {
      * Delete a poster.
      */
     @DeleteMapping("/posters/id/{id}")
-    public ResponseEntity<Void> deletePosterById(@PathVariable Long id) {
-        posterService.deletePosterById(id);
-        return ResponseEntity.noContent().build();
-    }
+    public ResponseEntity<String> deletePoster(@PathVariable Long id) {
+        posterService.deletePoster(id);
+        return ResponseEntity.ok("Poster deleted successfully");
+    }    
 
 
      /*** 
