@@ -4,15 +4,17 @@ public class PosterRequestDTO {
     private String title;
     private String description;
     private float price;
-    private byte[] imageData;
+    private String imageData;
     private String userEmail;
+    private int numPurchases;
 
-    public PosterRequestDTO(String title, String description, float price, byte[] imageData, String userEmail) {
+    public PosterRequestDTO(String title, String description, float price, String imageData, String userEmail, int numPurchases) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.imageData = imageData;
         this.userEmail = userEmail;
+        this.numPurchases =numPurchases;
     }
 
     public String getTitle() {
@@ -27,12 +29,16 @@ public class PosterRequestDTO {
         return this.price;
     }
 
-    public byte[] getImageData() {
+    public String getUrl() {
         return this.imageData;
     }
 
     public String getUserEmail() {
         return this.userEmail;
+    }
+
+    public int getNumPurchases() {
+        return this.numPurchases;
     }
 
 

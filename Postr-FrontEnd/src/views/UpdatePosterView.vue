@@ -1,34 +1,37 @@
 <template>
-  <div class="upload-poster-page">
-    <!-- Two-column content wrapper -->
-    <div class="upload-poster-container">
+  <div class="update-poster-page">
+    <h1 class="page-title">Update Poster</h1>
 
-      <!-- Left half: Image upload area -->
-      <div class="upload-area">
+    <div class="update-poster-container">
+      <!-- Left Column: Image Update -->
+      <div class="update-area">
         <div class="image-placeholder" @click="triggerFileInput">
-          <p>Add picture</p>
           <!-- Hidden file input -->
           <input
             type="file"
             ref="fileInput"
-            @change="handleFileUpload"
+            @change="handleFileUpdate"
             accept="image/*"
           />
-        </div>
-        <div v-if="previewImage" class="preview-container">
-          <img :src="previewImage" alt="Preview" />
+          <!-- Conditionally render the preview image or the placeholder text -->
+          <template v-if="imageUrl">
+            <img :src="imageUrl" alt="preview" class="preview-image" />
+          </template>
+          <template v-else>
+            <p>Add picture</p>
+          </template>
         </div>
       </div>
 
-      <!-- Right half: Form fields -->
+      <!-- Right Column: Poster Form -->
       <div class="form-area">
-        <h1>Upload poster</h1>
         <form @submit.prevent="handleSubmit" class="poster-form">
           <div class="form-group">
             <label for="title">Title</label>
-            <input 
+            <input
               id="title"
-              v-model="title" 
+              class="text-container"
+              v-model="title"
               type="text"
               placeholder="Enter poster title"
               required
@@ -39,6 +42,7 @@
             <label for="description">Description</label>
             <textarea
               id="description"
+              class="text-container"
               v-model="description"
               placeholder="Enter poster description"
               rows="5"
@@ -48,8 +52,9 @@
 
           <div class="form-group">
             <label for="price">Price</label>
-            <input 
+            <input
               id="price"
+              class="text-container"
               v-model="price"
               type="number"
               min="0"
@@ -59,121 +64,119 @@
             />
           </div>
 
-          <button type="submit" class="post-button">Post</button>
+          <button type="submit" class="update-button">Update</button>
         </form>
       </div>
     </div>
 
-    <!-- Separate footer component -->
+    <!-- Footer (component, if you have it) -->
     <FooterComponent />
   </div>
 </template>
 
 <script>
-import FooterComponent from "@/components/FooterComponent.vue"; 
-// Adjust path if needed
+import axios from "axios";
+import FooterComponent from "@/components/Footer.vue";
 
 export default {
-  name: "UploadPoster",
-  components: {
-    FooterComponent,
-  },
+  name: "UpdatePoster",
+  components: { FooterComponent },
   data() {
     return {
-      title: "",
-      description: "",
-      price: "",
-      previewImage: null,
-      imageFile: null,
+      title: "Sun & Blue",
+      price: 13.99,
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.",
+      imageUrl: "src/assets/POSTER-sun&blue.jpg",
     };
   },
   methods: {
     triggerFileInput() {
-      // Programmatically open the hidden file input
       this.$refs.fileInput.click();
     },
-    handleFileUpload(event) {
+    handleFileUpdate(event) {
       const file = event.target.files[0];
       if (!file) return;
 
       this.imageFile = file;
 
-      // Create a preview URL with FileReader
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.previewImage = e.target.result;
+        this.imageUrl = e.target.result;
       };
       reader.readAsDataURL(file);
     },
     handleSubmit() {
-      // Example: Gather form data
-      const formData = new FormData();
-      formData.append("title", this.title);
-      formData.append("description", this.description);
-      formData.append("price", this.price);
-      if (this.imageFile) {
-        formData.append("image", this.imageFile);
+      let base64Data = null;
+      if (this.imageUrl) {
+        base64Data = this.imageUrl.split(",")[1];
       }
 
-      // Example POST request
-      // axios.post("/api/posters", formData)
-      //   .then(response => { ... })
-      //   .catch(error => { ... });
+      const requestBody = {
+        title: this.title,
+        description: this.description,
+        price: parseFloat(this.price),
+        imageData: base64Data,
+        userEmail: "john.doe@example.com",
+      };
 
-      // Clear form
-      this.title = "";
-      this.description = "";
-      this.price = "";
-      this.imageFile = null;
-      this.previewImage = null;
-      alert("Poster submitted!");
+      axios
+        .put(`http://localhost:8080/posters/${poster.id}`, requestBody)
+        .then((response) => {
+          console.log("Poster updated successfully:", response.data);
+          alert("Poster updated!");
+          // Clear the form fields
+          this.title = "";
+          this.description = "";
+          this.price = "";
+          this.previewImage = null;
+          this.imageFile = null;
+        })
+        .catch((error) => {
+          console.error("Error updating poster:", error);
+          alert("Error updating poster. Please try again.");
+        });
     },
   },
 };
 </script>
 
 <style scoped>
-/* Add top padding to stay below any fixed navbar. 
-   Adjust if your navbar is taller/shorter than 80px. */
-.upload-poster-page {
-  width: 100%;
+.update-poster-page {
   min-height: 100vh;
-  margin: 0;
   padding-top: 80px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-/* Creates a 2-column layout spanning full width. */
-.upload-poster-container {
+.page-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.update-poster-container {
   display: flex;
-  flex: 1;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1000px;
   width: 100%;
-  margin: 0;
-  padding: 1rem;
+  padding: 0 2rem 2rem;
   box-sizing: border-box;
 }
 
-/* Left column */
-.upload-area {
-  width: 50%;
+.update-area {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-}
-
-/* Right column */
-.form-area {
-  width: 50%;
-  padding: 0 1rem; /* optional spacing */
-  box-sizing: border-box;
 }
 
 .image-placeholder {
   width: 100%;
+  max-width: 400px;
   height: 300px;
   border: 2px dashed #ccc;
   border-radius: 8px;
@@ -181,6 +184,8 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  text-align: center;
+  overflow: hidden;
 }
 
 .image-placeholder input[type="file"] {
@@ -192,19 +197,15 @@ export default {
   color: #555;
 }
 
-.preview-container {
-  margin-top: 1rem;
+.preview-image {
   width: 100%;
-}
-
-.preview-container img {
-  width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  border-radius: 8px;
 }
 
-.form-area h1 {
-  margin-bottom: 1rem;
+.form-area {
+  flex: 1;
 }
 
 .poster-form {
@@ -231,11 +232,16 @@ export default {
   box-sizing: border-box;
 }
 
-.post-button {
+.text-container {
+  font-family: "Poppins", sans-serif;
+}
+
+.update-button {
   background-color: #5b9bd5;
   color: #fff;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+  font-family: "Poppins", sans-serif;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -243,7 +249,7 @@ export default {
   margin-top: 1rem;
 }
 
-.post-button:hover {
+.update-button:hover {
   opacity: 0.9;
 }
 </style>

@@ -22,7 +22,7 @@ export default {
 
 <style>
 body {
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   color: #333;
   margin: 0;
   font-family: "Poppins", sans-serif;
