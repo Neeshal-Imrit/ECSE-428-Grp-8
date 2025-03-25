@@ -5,6 +5,9 @@ import ca.mcgill.ecse428.postr.exception.PostrException;
 import jakarta.transaction.Transactional;
 import ca.mcgill.ecse428.postr.model.Poster;
 import ca.mcgill.ecse428.postr.model.User;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -93,5 +96,17 @@ public class UserService {
         user.addPosterPurchase(boughtPoster);
 
     }
+
+    @Transactional
+    public List<Poster> getPurchasedPostersByUser(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            throw new IllegalArgumentException("Invalid user id");
+        }
+        else{
+            return posterRepository.findByUserId(userId);
+        }
+    }
+    
 
 }
