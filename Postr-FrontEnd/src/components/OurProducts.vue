@@ -1,50 +1,55 @@
 <template>
-    <div class="poster-list">
-      <h2 class="title">Our Posters</h2>
-      <div class="posters">
-        <div class="poster-container" v-for="poster in posters" :key="poster.title">
-          <img
-            v-if="poster.imageData"
-            :src="'data:image/jpeg;base64,' + poster.imageData"
-            :alt="poster.title"
-            class="poster-image"
-          />
-          <div class="poster-info">
-            <h3 class="poster-title">{{ poster.title }}</h3>
-            <p class="poster-description">{{ poster.description }}</p>
-            <p class="poster-price">${{ poster.price }}</p>
-          </div>
+  <div class="poster-list">
+    <h2 class="title">Our Posters</h2>
+    <div class="posters">
+      <div class="poster-container" v-for="poster in posters" :key="poster.title">
+        <img
+          v-if="poster.imageData"
+          :src="'data:image/jpeg;base64,' + poster.imageData"
+          :alt="poster.title"
+          class="poster-image"
+        />
+        <div class="poster-info">
+          <h3 class="poster-title">{{ poster.title }}</h3>
+          <p class="poster-description">{{ poster.description }}</p>
+          <p class="poster-price">${{ poster.price }}</p>
+          <button @click="handleDeletePoster(poster.id)">Delete</button>
         </div>
       </div>
-      <div v-if="loading" class="status">Loading...</div>
-      <div v-else-if="error" class="status error">Error: {{ error }}</div>
     </div>
-  </template>
-  
-  <script>
-  import { onMounted } from 'vue';
-  import { usePosterStore } from '@/stores/posterStore';
-  import { storeToRefs } from 'pinia';
-  
-  export default {
-    name: 'PosterList',
-    setup() {
-      const posterStore = usePosterStore();
-      // Use storeToRefs to keep reactivity
-      const { posters, loading, error } = storeToRefs(posterStore);
-  
-      onMounted(() => {
-        posterStore.fetchAllPosters();
-      });
-  
-      return {
-        posters,
-        loading,
-        error,
-      };
-    },
-  };
-  </script>
+    <div v-if="loading" class="status">Loading...</div>
+    <div v-else-if="error" class="status error">Error: {{ error }}</div>
+  </div>
+</template>
+
+<script>
+import { onMounted } from 'vue';
+import { usePosterStore } from '@/stores/posterStore';
+import { storeToRefs } from 'pinia';
+
+export default {
+  name: 'PosterList',
+  setup() {
+    const posterStore = usePosterStore();
+    const { posters, loading, error } = storeToRefs(posterStore);
+
+    onMounted(() => {
+      posterStore.fetchAllPosters();
+    });
+
+    const handleDeletePoster = (id) => {
+      posterStore.deletePoster(id);
+    };
+
+    return {
+      posters,
+      loading,
+      error,
+      handleDeletePoster,
+    };
+  },
+};
+</script>
   
   <style scoped>
   .poster-list {

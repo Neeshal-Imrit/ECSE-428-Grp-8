@@ -3,6 +3,7 @@
     <NewArrival />
     <BrowseRange />
     <OurProducts />
+    <UploadPoster />
   </div>
 
 <!-- Example -- Show the welcome message only if the user is logged in -->
@@ -15,6 +16,7 @@ import { userEmail } from "@/auth.js"; // Import userEmail
 import NewArrival from "@/components/NewArrival.vue";
 import BrowseRange from "@/components/BrowseRange.vue";
 import OurProducts from "@/components/OurProducts.vue";
+import UploadPoster from "@/components/UploadPoster.vue";
 </script>
 
 <style scoped>

@@ -99,6 +99,17 @@ public class PosterController {
     }
 
     /**
+     * DELETE /posters/id/{id}
+     * Delete a poster.
+     */
+    @DeleteMapping("/posters/id/{id}")
+    public ResponseEntity<String> deletePoster(@PathVariable Long id) {
+        posterService.deletePoster(id);
+        return ResponseEntity.ok("Poster deleted successfully");
+    }    
+
+
+     /*** 
      * PUT /posters/buy
      * Buy a poster.
      */
