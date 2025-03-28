@@ -64,8 +64,7 @@ public class BuyPosterStepDefinitions {
             poster.setPrice(Float.parseFloat(row.get("price")));
             poster.setUrl(row.get("imageData"));
 
-            // Set the owner of the poster if provided
-            String ownerEmail = row.get("user"); // Ensure this column matches the feature file
+            String ownerEmail = row.get("user");
             if (ownerEmail != null && !ownerEmail.isEmpty()) {
                 User owner = userRepository.findUserByEmail(ownerEmail);
                 assertNotNull(owner, "Owner user must exist in the database.");
