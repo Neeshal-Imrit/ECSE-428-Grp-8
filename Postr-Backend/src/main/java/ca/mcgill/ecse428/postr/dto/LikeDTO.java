@@ -4,6 +4,18 @@ public class LikeDTO {
     private Long id;
     private Long userId;
     private Long posterId;
+    private Long numLikes;
+
+
+    public LikeDTO() {
+    }
+    public LikeDTO(Long id, Long userId, Long posterId, Long numLikes) {
+        this.id = id;
+        this.userId = userId;
+        this.posterId = posterId;
+        this.numLikes = numLikes;
+    }
+
 
     public Long getId() {
         return id;
@@ -23,6 +35,14 @@ public class LikeDTO {
 
     public Long getPosterId() {
         return posterId;
+    }
+
+    public Long getNumLikes() {
+        return numLikes;
+    }
+
+    public void setNumLikes(Long numLikes) {
+        this.numLikes = numLikes;
     }
 
     public void setPosterId(Long posterId) {

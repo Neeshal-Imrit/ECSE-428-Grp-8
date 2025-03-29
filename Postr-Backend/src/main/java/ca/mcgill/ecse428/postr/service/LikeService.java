@@ -8,6 +8,10 @@ import ca.mcgill.ecse428.postr.model.User;
 import ca.mcgill.ecse428.postr.dao.LikeRepository;
 import ca.mcgill.ecse428.postr.dao.PosterRepository;
 import ca.mcgill.ecse428.postr.dao.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,16 +41,16 @@ public class LikeService {
     }
 
     public void unlikePoster(Long userId, Long posterId) {
-        Like like = likeRepository.findByUserIdAndPosterId(userId, posterId).orElseThrow(() -> new PostrException(HttpStatus.BAD_REQUEST, "Like not found"));
+        Like like = likeRepository.findByUser_IdAndPoster_Id(userId, posterId).orElseThrow(() -> new PostrException(HttpStatus.BAD_REQUEST, "Like not found"));
         likeRepository.delete(like);
     }
 
     public boolean hasUserLikedPoster(Long userId, Long posterId) {
-        return likeRepository.findByUserIdAndPosterId(userId, posterId).isPresent();
+        return likeRepository.findByUser_IdAndPoster_Id(userId, posterId).isPresent();
     }
 
     public long getNumberOfLikesForPoster(Long posterId) {
-        return likeRepository.countByPosterId(posterId);
+        return likeRepository.countByPoster_Id(posterId);
     }
 
     private LikeDTO convertToDTO(Like like) {
@@ -56,4 +60,34 @@ public class LikeService {
         likeDTO.setPosterId(like.getPoster().getId());
         return likeDTO;
     }
+
+    public List<LikeDTO> getAllLikes() {
+        List<Like> likes = likeRepository.findAll();
+        List<LikeDTO> likeDTOs = new ArrayList<>();
+        for (Like like : likes) {
+            likeDTOs.add(convertToDTO(like));
+        }
+        return likeDTOs;
+    }
+
+    
+    public List<LikeDTO> getMostLikedPosters() {
+        List<Long> posterIds = likeRepository.findDistinctPosterIds();
+        List<LikeDTO> mostLikedPosters = new ArrayList<>();
+
+        for (Long posterId : posterIds) {
+            long likeCount = getNumberOfLikesForPoster(posterId);
+            LikeDTO likeDTO = new LikeDTO();
+            likeDTO.setPosterId(posterId);
+            likeDTO.setNumLikes(likeCount); 
+            mostLikedPosters.add(likeDTO);
+        }
+
+        mostLikedPosters.sort((a, b) -> Long.compare(b.getNumLikes(), a.getNumLikes()));
+        return mostLikedPosters;
+
+    }
+
+  
+
 }
