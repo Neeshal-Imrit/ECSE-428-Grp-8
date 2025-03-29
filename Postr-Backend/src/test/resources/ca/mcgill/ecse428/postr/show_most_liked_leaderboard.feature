@@ -6,15 +6,15 @@ So that I can browse designs that are highly rated
 Background:
 Given the following posters have popularity data in the system
 | title          | likes |
-| CoolPoster     | 100   |
-| Amazing Art    | 200   |
+| CoolPoster     | 1   |
+| Amazing Art    | 2   |
 
 Scenario: Display leaderboard successfully (Normal Flow)
 Given the user is on the "Popular Posters" page
 Then they should see the posters sorted by likes in descending order
 | title         | likes |
-| Amazing Art   | 200   |
-| CoolPoster    | 100   |
+| Amazing Art   | 2   |
+| CoolPoster    | 1   |
 
 Scenario: No popular posters available (Error Flow)
 Given there are no posters in the system
