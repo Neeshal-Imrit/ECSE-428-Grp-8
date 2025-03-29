@@ -41,6 +41,7 @@ import { useRoute } from "vue-router";
 
 import NavBar from "@/components/NavBar.vue";
 import FooterComponent from "@/components/Footer.vue";
+import { userId } from "@/auth";
 
 const poster = ref(null);
 const liked = ref(false);
@@ -57,7 +58,16 @@ onMounted(async () => {
   }
 });
 
-function toggleLike() {
+async function toggleLike() {
+  try {
+    if (liked.value) {
+      const response = await axios.delete(`http://localhost:8080/user/${userId}/poster/${poster.value.id}`);
+    } else {
+      const response = await axios.post(`http://localhost:8080/user/${userId}/poster/${poster.value.id}`);
+    }
+  } catch (error) {
+    console.error("Error toggling like status:", error);
+  }
   liked.value = !liked.value;
 }
 </script>
