@@ -146,4 +146,21 @@ public class PosterService {
     public List<Poster> getMostPurchasedPosters() {
         return posterRepository.findAllByOrderByNumPurchasesDesc();
     }
+
+    @Transactional
+    public List<Poster> getByCategory(String category) {
+        return posterRepository.findByCategory(category);
+    }
+
+    @Transactional
+    public List<Poster> getByPriceRange(double minPrice, double maxPrice) {
+        if (minPrice < 0 || maxPrice < 0) {
+            throw new PostrException(HttpStatus.BAD_REQUEST, "The poster's price cannot be negative");
+        }
+        List<Poster> posters = posterRepository.findByPriceBetween(minPrice, maxPrice);
+        if (posters.isEmpty()) {
+            throw new PostrException(HttpStatus.NOT_FOUND, "No posters match the selected criteria");
+        }
+        return posters;
+    }
 }

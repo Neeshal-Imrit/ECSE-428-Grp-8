@@ -148,4 +148,41 @@ public class PosterController {
                       .map(PosterResponseDTO::new)
                       .collect(Collectors.toList());
     }
-}
+
+    /**
+     * GET /posters/category/{category}
+     * Retrieve posters by category.
+     */
+    @GetMapping("/posters/category/{category}")
+    public  ResponseEntity<?> getPostersByCategory(@PathVariable String category) {
+
+        try {
+            List<Poster> posters = posterService.getByCategory(category);
+            List<PosterResponseDTO> posterResponseDTOs = posters.stream()
+                                                                .map(PosterResponseDTO::new)
+                                                                .collect(Collectors.toList());
+            return new ResponseEntity<>(posterResponseDTOs, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    /**
+     * GET /possters/price/{minPrice}/{maxPrice}
+     * Retrieve posters by price range.
+     */
+    @GetMapping("/posters/price/{minPrice}/{maxPrice}")
+    public ResponseEntity<?> getPostersByPriceRange(@PathVariable double minPrice, @PathVariable double maxPrice) {
+        try {
+            List<Poster> posters = posterService.getByPriceRange(minPrice, maxPrice);
+            List<PosterResponseDTO> posterResponseDTOs = posters.stream()
+                                                                .map(PosterResponseDTO::new)
+                                                                .collect(Collectors.toList());
+            return new ResponseEntity<>(posterResponseDTOs, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    }

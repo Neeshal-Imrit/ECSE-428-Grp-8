@@ -29,6 +29,8 @@ public class Poster {
 
   private String title;
 
+  private String category;
+
   private int likes;
   public String getTitle() {
     return title;
@@ -36,6 +38,10 @@ public class Poster {
 
   public String getDescription() {
     return description;
+  }
+
+  public String getCategory() {
+    return category;
   }
 
   public float getPrice() {
@@ -89,6 +95,7 @@ public class Poster {
     }
     numPurchases = 0;
     likes = 0;
+    category = null;
   }
 
   // ------------------------
@@ -166,6 +173,13 @@ public class Poster {
     int wasSet = 0;
     likes = aLikes;
     wasSet = 1;
+    return wasSet;
+  }
+
+  public boolean setCategory(String aCategory) {
+    boolean wasSet = false;
+    category = aCategory;
+    wasSet = true;
     return wasSet;
   }
 
