@@ -1,7 +1,7 @@
 package ca.mcgill.ecse428.postr.controller;
 
 import ca.mcgill.ecse428.postr.dto.LikeDTO;
-
+import ca.mcgill.ecse428.postr.exception.PostrException;
 import ca.mcgill.ecse428.postr.service.LikeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,13 @@ public class LikeController {
     private LikeService likeService;
 
     @PostMapping("/user/{userId}/poster/{posterId}")
-    public ResponseEntity<LikeDTO> likePoster(@PathVariable Long userId, @PathVariable Long posterId) {
-        LikeDTO like = likeService.likePoster(userId, posterId);
-        return ResponseEntity.ok(like);
+    public ResponseEntity<?> likePoster(@PathVariable Long userId, @PathVariable Long posterId) {
+        try {
+            LikeDTO like = likeService.likePoster(userId, posterId);
+            return ResponseEntity.ok(like);
+        } catch (PostrException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/user/{userId}/poster/{posterId}")
@@ -39,7 +43,7 @@ public class LikeController {
         return ResponseEntity.ok(likeCount);
     }
 
-     // Get an array of most liked posters in descending order
+    // Get an array of most liked posters in descending order
     @GetMapping("/most-liked")
     public ResponseEntity<List<LikeDTO>> getMostLikedPosters() {
         List<LikeDTO> mostLikedPosters = likeService.getMostLikedPosters();

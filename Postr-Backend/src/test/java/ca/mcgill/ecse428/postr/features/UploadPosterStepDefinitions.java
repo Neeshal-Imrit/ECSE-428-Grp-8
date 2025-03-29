@@ -119,6 +119,20 @@ public class UploadPosterStepDefinitions {
     public void theFollowingPostersShallExistInTheSystem(DataTable dataTable) {
         List<Map<String, String>> expectedPosters = dataTable.asMaps();
         List<Poster> actualPosters = posterRepository.findAll();
+
+        // Sort actualPosters to match the order of expectedPosters by title
+        actualPosters.sort((p1, p2) -> {
+            int index1 = expectedPosters.stream()
+                    .map(p -> p.get("title"))
+                    .toList()
+                    .indexOf(p1.getTitle());
+            int index2 = expectedPosters.stream()
+                    .map(p -> p.get("title"))
+                    .toList()
+                    .indexOf(p2.getTitle());
+            return Integer.compare(index1, index2);
+        });
+
         for (int i = 0; i < expectedPosters.size(); i++) {
             Map<String, String> expectedPoster = expectedPosters.get(i);
             Poster actualPoster = actualPosters.get(i);

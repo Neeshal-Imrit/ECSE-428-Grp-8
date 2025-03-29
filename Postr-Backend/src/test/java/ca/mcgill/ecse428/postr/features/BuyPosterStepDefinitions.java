@@ -112,8 +112,8 @@ public class BuyPosterStepDefinitions {
         controllerResponse = posterController.buyPoster(poster.getId());
     }
 
-    @Then("they should see an error message {string}")
-    public void theyShouldSeeAnErrorMessage(String expectedMessage) {
+    @Then("they should see a buy poster error message {string}")
+    public void theyShouldSeeABuyPosterErrorMessage(String expectedMessage) {
         assertNotNull(controllerResponse, "Response should not be null.");
 
         Object responseBody = controllerResponse.getBody();
@@ -131,5 +131,20 @@ public class BuyPosterStepDefinitions {
     public void theyPurchaseTheirOwnPoster(String posterTitle) {
         Poster poster = posterRepository.findPosterByTitle(posterTitle);
         controllerResponse = userController.purchasePoster(loggedInUser.getId(), poster.getId());
+    }
+
+    @Then("they should see a buy poster specific error message {string}")
+    public void theyShouldSeeABuyPosterSpecificErrorMessage(String expectedMessage) {
+        assertNotNull(controllerResponse, "Response should not be null.");
+
+        Object responseBody = controllerResponse.getBody();
+        assertNotNull(responseBody, "Response body should not be null.");
+
+        // Handle ErrorDTO case
+        if (responseBody instanceof ca.mcgill.ecse428.postr.dto.ErrorDTO errorDTO) {
+            assertEquals(expectedMessage, errorDTO.getError(), "Error message mismatch.");
+        } else {
+            assertEquals(expectedMessage, responseBody.toString(), "Error message mismatch.");
+        }
     }
 }
