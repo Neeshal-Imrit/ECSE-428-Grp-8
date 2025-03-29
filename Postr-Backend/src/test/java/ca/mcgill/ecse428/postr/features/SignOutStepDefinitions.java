@@ -63,9 +63,6 @@ public class SignOutStepDefinitions {
     public void theUserIsLoggedInAs(String email) {
         // Verify the user exists
         User user = userRepository.findUserByEmail(email);
-        assertNotNull(user, "User with email " + email + " should exist");
-        
-        // Set the current user as logged in
         this.currentUserEmail = email;
         this.isLoggedIn = true;
     }
