@@ -16,25 +16,23 @@ export default {
   name: "NewArrival",
   methods: {
     handleClick() {
-      this.$router.push({ name: "shop" }); // Redirect to ShopView page
+      this.$router.push({ name: "shop" });
     },
   },
 };
 </script>
 
 <style scoped>
-/* Ensure no margin on body and html */
 html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  overflow-y: auto; /* Allow vertical scrolling */
-  width: 100%; /* Ensure full width */
-  height: 100%; /* Ensure full height */
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
 }
 
-/* Full-width background */
 .background {
   width: 100vw;
   height: calc(80vh - 60px);
@@ -49,7 +47,6 @@ body {
   margin-top: 60px;
 }
 
-/* The container in front of the background */
 .container {
   width: 30%;
   height: 80%;
@@ -63,7 +60,6 @@ body {
   justify-content: space-between;
 }
 
-/* Text styling */
 .text {
   font-size: 15px;
   margin-top: 10px;
@@ -82,7 +78,6 @@ body {
   font-weight: bold;
 }
 
-/* Button styling */
 .button {
   background-color: #b88e2f;
   color: white;

@@ -49,7 +49,7 @@ export default {
 
 .images {
   display: flex;
-  justify-content: center; /* Center images */
+  justify-content: center;
 }
 
 .image-container {

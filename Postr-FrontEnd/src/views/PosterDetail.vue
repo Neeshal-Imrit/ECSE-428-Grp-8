@@ -1,9 +1,7 @@
 <template>
   <div>
-    <!-- Navigation bar component -->
     <NavBar />
 
-    <!-- Main content area for the poster details -->
     <section class="poster-detail-container">
       <div class="detail-view" v-if="poster">
         <div class="poster-image">
@@ -33,7 +31,6 @@
       </div>
     </section>
 
-    <!-- Footer component -->
     <FooterComponent />
   </div>
 </template>
@@ -42,26 +39,19 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
-// Import your existing NavBar and Footer components
 import NavBar from "@/components/NavBar.vue";
 import FooterComponent from "@/components/Footer.vue";
 
-// Register them locally (or you can globally register in main.js)
 const poster = ref(null);
 const liked = ref(false);
 const route = useRoute();
 
-// Example: fetch poster data by ID (mock or real API call)
 onMounted(async () => {
-  // For example, get the poster ID from route params
   const { id } = route.params;
 
-  // Example: fetch from an API endpoint using the ID
-  // Replace this with your actual API or data retrieval logic
   try {
     const response = await fetch(`https://api.example.com/posters/${id}`);
     const data = await response.json();
-    //poster.value = data;
   } catch (error) {
     console.error("Error fetching poster:", error);
   }

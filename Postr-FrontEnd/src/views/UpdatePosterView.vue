@@ -6,14 +6,12 @@
       <!-- Left Column: Image Update -->
       <div class="update-area">
         <div class="image-placeholder" @click="triggerFileInput">
-          <!-- Hidden file input -->
           <input
             type="file"
             ref="fileInput"
             @change="handleFileUpdate"
             accept="image/*"
           />
-          <!-- Conditionally render the preview image or the placeholder text -->
           <template v-if="imageUrl">
             <img :src="imageUrl" alt="preview" class="preview-image" />
           </template>
@@ -69,7 +67,6 @@
       </div>
     </div>
 
-    <!-- Footer (component, if you have it) -->
     <FooterComponent />
   </div>
 </template>
@@ -125,7 +122,6 @@ export default {
         .then((response) => {
           console.log("Poster updated successfully:", response.data);
           alert("Poster updated!");
-          // Clear the form fields
           this.title = "";
           this.description = "";
           this.price = "";

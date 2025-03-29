@@ -31,13 +31,13 @@
       this.fetchPurchaseHistory();
     },
     watch: {
-    '$route.params.userId': 'fetchPurchaseHistory', // Watch for changes in userId in the URL
+    '$route.params.userId': 'fetchPurchaseHistory',
     },
     methods: {
       async fetchPurchaseHistory() {
         try {
-          const userId = this.$route.params.userId; // Get the userId from the URL
-          const response = await fetch("http://localhost:8080/users/"+userId+"/purchases"); // Adjust API endpoint as needed
+          const userId = this.$route.params.userId;
+          const response = await fetch("http://localhost:8080/users/"+userId+"/purchases");
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
@@ -90,11 +90,11 @@
     box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.1);
   }
   .poster-card h3 {
-  color: #010101; /* Change color of poster title */
+  color: #010101;
   }
 
   .poster-card p {
-  color: #000000; /* Change color of description text */
+  color: #000000;
   }
   .poster-image {
     width: 100%;

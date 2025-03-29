@@ -58,7 +58,6 @@ public class UploadPosterStepDefinitions {
     public void theUserIsLoggedInAs(String email) {
         loggedInUser = userRepository.findUserByEmail(email);
         assertNotNull(loggedInUser, "User must exist to log in.");
-        // Force initialization of lazy collections
         loggedInUser.getPosters().size();
     }
 
@@ -100,7 +99,7 @@ public class UploadPosterStepDefinitions {
 
     @Given("the user is on the upload poster page upload posters")
     public void theUserIsOnTheUploadPosterPage() {
-        // No action needed, just simulating the user navigation
+        // Simulating the user navigation
     }
 
     @When("he enters a title {string} and a description {string} and a price {float} and an image file {string}")
@@ -166,7 +165,6 @@ public class UploadPosterStepDefinitions {
     @When("the user uploads a poster with the same title as an existing one")
     public void theUserUploadsAPosterWithTheSameTitleAsAnExistingOne() {
         assertNotNull(loggedInUser, "User must be logged in to upload a poster.");
-        // Try to upload a new poster with the same title
         PosterRequestDTO request = new PosterRequestDTO(
             "CoolPoster",  // Duplicate title
             "Another description",
@@ -202,8 +200,6 @@ public class UploadPosterStepDefinitions {
 
     @Then("they should see a message {string} upload poster")
     public void they_should_see_a_message(String expectedMessage) {
-        // Verify that the message is displayed
-        // This would typically involve checking the response from a controller or service
         assertNotNull(controllerResponse, "Controller response should not be null.");
         assertNotNull(controllerResponse.getBody(), "Message should be present.");
         assertEquals(expectedMessage, controllerResponse.getBody().toString(), "Message mismatch.");

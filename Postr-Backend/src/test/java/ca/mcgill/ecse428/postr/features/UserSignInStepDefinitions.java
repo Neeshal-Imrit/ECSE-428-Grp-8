@@ -52,39 +52,39 @@ public class UserSignInStepDefinitions {
 
     @Given("the user is on the sign-in page")
     public void theUserIsOnTheSignInPage() {
-        // Simulate the user being on the sign-in page (no action needed for this case)
+        // Simulate the user being on the sign-in page
     }
 
     @When("he enters an email {string} and password {string}")
     public void heEntersAValidEmailAndPassword(String email, String password) {
-        controllerResponse = userController.login(email, password);  // Use the class-level variable
+        controllerResponse = userController.login(email, password);
     }
 
     @Then("he should be redirected to the home page")
     public void heShouldBeRedirectedToTheHomePage() {
         assertEquals(200, controllerResponse.getStatusCode().value());
-        assertNotNull(controllerResponse.getBody());// Assuming the body contains a message or redirection path
+        assertNotNull(controllerResponse.getBody());
     }
 
     @When("he enters an email {string} and an invalid password {string}")
     public void heEntersanInvalidPassword(String email, String password) {
-        controllerResponse = userController.login(email, password);  // Use the class-level variable
+        controllerResponse = userController.login(email, password);
     }
 
     @Then("he should see an error message sign in {string}")
     public void heShouldSeeAnErrorMessageSignIn(String expectedErrorMessage) {
-        assertEquals(400, controllerResponse.getStatusCode().value()); // Assuming a 400 status for invalid login
+        assertEquals(400, controllerResponse.getStatusCode().value());
         assertEquals(expectedErrorMessage, ((ErrorDTO) controllerResponse.getBody()).getError());
     }
 
     @When("he enters an invalid email {string} and a password {string}")
     public void heEntersAnInvalidEmail(String email, String password) {
-        controllerResponse = userController.login(email, password);  // Use the class-level variable
+        controllerResponse = userController.login(email, password);
     }
 
     @Then("he should see an error message {string} for invalid email")
     public void heShouldSeeAnErrorMessageForInvalidEmail(String expectedErrorMessage) {
-        assertEquals(400, controllerResponse.getStatusCode().value()); // Assuming a 400 status for invalid login
+        assertEquals(400, controllerResponse.getStatusCode().value());
         assertEquals(expectedErrorMessage, controllerResponse.getBody());
     }
 }
