@@ -6,29 +6,30 @@ So that I can browse designs that are highly rated
 Background:
 Given the following posters have popularity data in the system
 | title          | likes |
-| CoolPoster     | 100   |
-| Amazing Art    | 200   |
+| CoolPoster     | 1   |
+| Amazing Art    | 2   |
 
 Scenario: Display leaderboard successfully (Normal Flow)
-Given the user is on the "Popular Posters" page
+Given the user is now on the "Popular Posters" page
 Then they should see the posters sorted by likes in descending order
 | title         | likes |
-| Amazing Art   | 200   |
-| CoolPoster    | 100   |
+| Amazing Art   | 2   |
+| CoolPoster    | 1   |
 
 Scenario: No popular posters available (Error Flow)
 Given there are no posters in the system
-When the user is on the "Popular Posters" page
-Then they should see a message "No posters available"
+When the user navigates to the "Popular Posters" page
+Then they should see a message with text "No posters available"
 
-Scenario: No like data available for one of the posters (Alternate Flow)
-   Given the following posters have sales data in the system  
-    | title          | likes       |  
-    | CoolPoster     | 15          |  
-    | VeryCoolPoster | 10          |  
-    | Amazing Art    |             |  
-   When the user is on the "Leaderboard" page  
-   Then they should see the posters sorted by salesCount in descending order  
-    | title          | salesCount  |   
-    | CoolPoster     | 15          |  
-    | VeryCoolPoster | 10          | 
+Scenario: Multiple posters with same number of likes (Alternate Flow)
+Given the following posters have popularity data in the system
+  | title         | likes |
+  | CoolPoster    | 10    |
+  | AwesomeDesign | 10    |
+  | BrilliantArt  | 10    |
+When the user is now on the "Popular Posters" page
+Then they should see posters with equal likes sorted alphabetically by title
+  | title         | likes |
+  | AwesomeDesign | 10    |
+  | BrilliantArt  | 10    |
+  | CoolPoster    | 10    |

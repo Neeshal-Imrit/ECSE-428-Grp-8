@@ -1,8 +1,9 @@
 package ca.mcgill.ecse428.postr.controller;
 
 import ca.mcgill.ecse428.postr.dto.LikeDTO;
-import ca.mcgill.ecse428.postr.model.Like;
+
 import ca.mcgill.ecse428.postr.service.LikeService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,4 +38,12 @@ public class LikeController {
         long likeCount = likeService.getNumberOfLikesForPoster(posterId);
         return ResponseEntity.ok(likeCount);
     }
+
+     // Get an array of most liked posters in descending order
+    @GetMapping("/most-liked")
+    public ResponseEntity<List<LikeDTO>> getMostLikedPosters() {
+        List<LikeDTO> mostLikedPosters = likeService.getMostLikedPosters();
+        return ResponseEntity.ok(mostLikedPosters);
+    }
+    
 }
