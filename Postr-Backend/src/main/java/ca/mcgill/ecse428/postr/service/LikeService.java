@@ -80,6 +80,7 @@ public class LikeService {
             LikeDTO likeDTO = new LikeDTO();
             likeDTO.setPosterId(posterId);
             likeDTO.setNumLikes(likeCount); 
+            likeDTO.setPosterTitle(posterRepository.findPosterById(posterId).getTitle()); // Assuming you have a method to get the poster title
             mostLikedPosters.add(likeDTO);
         }
 

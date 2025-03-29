@@ -5,22 +5,32 @@ public class LikeDTO {
     private Long userId;
     private Long posterId;
     private Long numLikes;
+    private String posterTitle;
 
 
     public LikeDTO() {
     }
-    public LikeDTO(Long id, Long userId, Long posterId, Long numLikes) {
+    public LikeDTO(Long id, String posterName, Long userId, Long posterId, Long numLikes) {
         this.id = id;
         this.userId = userId;
         this.posterId = posterId;
         this.numLikes = numLikes;
+        this.posterTitle = posterName;
     }
 
 
     public Long getId() {
         return id;
     }
+    
+    public String getPosterTitle() {
+        return posterTitle;
+    }
 
+    public void setPosterTitle(String posterTitle) {
+        this.posterTitle = posterTitle;
+    }
+    
     public void setId(Long id) {
         this.id = id;
     }
