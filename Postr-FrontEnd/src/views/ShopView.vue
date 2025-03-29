@@ -28,13 +28,11 @@ export default {
     }
   },
   created() {
-    // Uncomment the line below to fetch from backend
     this.fetchPosters();
   },
   methods: {
     async fetchPosters() {
       try {
-        // Replace with your backend URL
         const response = await fetch('http://localhost:8080/users/68/purchases')
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
@@ -56,7 +54,6 @@ export default {
     },
     buyNow(poster) {
       alert(`You have selected "${poster.title}" for ${this.formatPrice(poster.price)}.`);
-      // TODO: Implement actual checkout flow (e.g., navigate to a checkout page or open a payment modal)
     }
   }
 }
@@ -68,9 +65,9 @@ export default {
 }
 .poster-list {
   display: flex;
-  flex-wrap: nowrap; /* Ensures posters wrap to the next row when needed */
-  justify-content: center; /* Centers posters in the row */
-  gap: 10px; /* Adds spacing between posters */
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 10px;
   max-width: 100%;;
 }
 .poster-card {

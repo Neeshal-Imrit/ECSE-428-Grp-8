@@ -1,4 +1,3 @@
-<!-- src/views/HomeView.vue -->
 <template>
   <div>
     <h1>My Posters Page</h1>

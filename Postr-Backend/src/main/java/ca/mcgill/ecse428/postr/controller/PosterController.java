@@ -122,4 +122,18 @@ public class PosterController {
             return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * PUT /posters/update/{id}
+     * Update an existing poster.
+     */
+    @PutMapping("/posters/update/{id}")
+    public ResponseEntity<?> updatePoster(@PathVariable Long id, @RequestBody PosterRequestDTO posterRequestDTO) {
+        try {
+            Poster poster = posterService.updatePoster(id, posterRequestDTO);
+            return new ResponseEntity<>(new PosterResponseDTO(poster), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

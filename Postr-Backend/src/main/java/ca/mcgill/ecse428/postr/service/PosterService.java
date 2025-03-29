@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import ca.mcgill.ecse428.postr.exception.PostrException;
 import ca.mcgill.ecse428.postr.dao.PosterRepository;
 import ca.mcgill.ecse428.postr.dao.UserRepository;
+import ca.mcgill.ecse428.postr.dto.PosterRequestDTO;
 import ca.mcgill.ecse428.postr.model.Poster;
 import ca.mcgill.ecse428.postr.model.User;
 import jakarta.transaction.Transactional;
@@ -106,6 +107,39 @@ public class PosterService {
             throw new PostrException(HttpStatus.NOT_FOUND, "Poster not found");
         }
         posterRepository.delete(poster);
+    }
+
+    @Transactional
+    public Poster updatePoster(Long id, PosterRequestDTO posterRequestDTO) {
+        Poster poster = posterRepository.findPosterById(id);
+        if (poster == null) {
+            throw new PostrException(HttpStatus.NOT_FOUND, "Poster not found");
+        }
+
+        if(posterRequestDTO.getTitle() == null || posterRequestDTO.getTitle().isEmpty()){
+            throw new PostrException(HttpStatus.BAD_REQUEST, "The poster must have a title");
+        }
+        if(posterRequestDTO.getDescription() == null || posterRequestDTO.getDescription().isEmpty()){
+            throw new PostrException(HttpStatus.BAD_REQUEST, "The description cannot be empty");
+        }
+        if(posterRequestDTO.getUrl() == null || posterRequestDTO.getUrl().isEmpty()){
+            throw new PostrException(HttpStatus.BAD_REQUEST, "There is no image for the poster");
+        }
+        if(posterRequestDTO.getPrice() < 0){
+            throw new PostrException(HttpStatus.BAD_REQUEST, "The poster's price cannot be negative");
+        }
+
+        Poster existingPoster = posterRepository.findPosterByTitle(posterRequestDTO.getTitle());
+        if(existingPoster != null && !existingPoster.getId().equals(id)) {
+            throw new PostrException(HttpStatus.BAD_REQUEST, "A poster with the same title already exists");
+        }
+
+        poster.setTitle(posterRequestDTO.getTitle());
+        poster.setDescription(posterRequestDTO.getDescription());
+        poster.setUrl(posterRequestDTO.getUrl());
+        poster.setPrice(posterRequestDTO.getPrice());
+
+        return posterRepository.save(poster);
     }
 
 }

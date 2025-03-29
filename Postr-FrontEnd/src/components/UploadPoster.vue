@@ -1,13 +1,13 @@
 <template>
   <div class="upload-poster-page">
-    <!-- Two-column content wrapper -->
+
     <div class="upload-poster-container">
 
-      <!-- Left half: Image upload area -->
+
       <div class="upload-area">
         <div class="image-placeholder" @click="triggerFileInput">
           <p>Add picture</p>
-          <!-- Hidden file input -->
+
           <input
             type="file"
             ref="fileInput"
@@ -20,7 +20,6 @@
         </div>
       </div>
 
-      <!-- Right half: Form fields -->
       <div class="form-area">
         <h1>Upload poster</h1>
         <form @submit.prevent="handleSubmit" class="poster-form">
@@ -64,14 +63,14 @@
       </div>
     </div>
 
-    <!-- Separate footer component -->
+
     <FooterComponent />
   </div>
 </template>
 
 <script>
 import FooterComponent from "@/components/FooterComponent.vue"; 
-// Adjust path if needed
+
 
 export default {
   name: "UploadPoster",
@@ -89,7 +88,6 @@ export default {
   },
   methods: {
     triggerFileInput() {
-      // Programmatically open the hidden file input
       this.$refs.fileInput.click();
     },
     handleFileUpload(event) {
@@ -98,7 +96,6 @@ export default {
 
       this.imageFile = file;
 
-      // Create a preview URL with FileReader
       const reader = new FileReader();
       reader.onload = (e) => {
         this.previewImage = e.target.result;
@@ -106,7 +103,6 @@ export default {
       reader.readAsDataURL(file);
     },
     handleSubmit() {
-      // Example: Gather form data
       const formData = new FormData();
       formData.append("title", this.title);
       formData.append("description", this.description);
@@ -115,12 +111,6 @@ export default {
         formData.append("image", this.imageFile);
       }
 
-      // Example POST request
-      // axios.post("/api/posters", formData)
-      //   .then(response => { ... })
-      //   .catch(error => { ... });
-
-      // Clear form
       this.title = "";
       this.description = "";
       this.price = "";
@@ -133,8 +123,6 @@ export default {
 </script>
 
 <style scoped>
-/* Add top padding to stay below any fixed navbar. 
-   Adjust if your navbar is taller/shorter than 80px. */
 .upload-poster-page {
   width: 100%;
   min-height: 100vh;
@@ -146,7 +134,6 @@ export default {
   justify-content: space-between;
 }
 
-/* Creates a 2-column layout spanning full width. */
 .upload-poster-container {
   display: flex;
   flex: 1;
@@ -156,7 +143,6 @@ export default {
   box-sizing: border-box;
 }
 
-/* Left column */
 .upload-area {
   width: 50%;
   display: flex;
@@ -165,10 +151,10 @@ export default {
   box-sizing: border-box;
 }
 
-/* Right column */
+
 .form-area {
   width: 50%;
-  padding: 0 1rem; /* optional spacing */
+  padding: 0 1rem;
   box-sizing: border-box;
 }
 

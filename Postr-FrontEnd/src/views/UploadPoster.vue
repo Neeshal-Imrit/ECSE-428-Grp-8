@@ -13,7 +13,6 @@
             @change="handleFileUpload"
             accept="image/*"
           />
-          <!-- Conditionally render the preview image or the placeholder text -->
           <template v-if="previewImage">
             <img :src="previewImage" alt="preview" class="preview-image" />
           </template>
@@ -23,7 +22,6 @@
         </div>
       </div>
 
-      <!-- Right Column: Poster Form -->
       <div class="form-area">
         <form @submit.prevent="handleSubmit" class="poster-form">
           <div class="form-group">
@@ -66,7 +64,6 @@
       </div>
     </div>
 
-    <!-- Footer (component, if you have it) -->
     <FooterComponent />
   </div>
 </template>
@@ -83,7 +80,7 @@ export default {
       title: '',
       description: '',
       price: '',
-      previewImage: null, // will hold the data URL of the uploaded image
+      previewImage: null,
       imageFile: null,
     };
   },
@@ -121,7 +118,6 @@ export default {
         .then(response => {
           console.log('Poster created successfully:', response.data);
           alert('Poster uploaded!');
-          // Clear the form fields
           this.title = '';
           this.description = '';
           this.price = '';

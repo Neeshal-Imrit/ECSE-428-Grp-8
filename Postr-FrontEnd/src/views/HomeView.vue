@@ -6,13 +6,11 @@
     <UploadPoster />
   </div>
 
-<!-- Example -- Show the welcome message only if the user is logged in -->
-<!--  <p v-if="userEmail" class="welcome-message">Welcome, {{ userEmail }}!</p>  -->
   <p class="welcome-message">Welcome to Postr!</p>
 </template>
 
 <script setup>
-import { userEmail } from "@/auth.js"; // Import userEmail
+import { userEmail } from "@/auth.js";
 import NewArrival from "@/components/NewArrival.vue";
 import BrowseRange from "@/components/BrowseRange.vue";
 import OurProducts from "@/components/OurProducts.vue";
@@ -28,6 +26,6 @@ import UploadPoster from "@/components/UploadPoster.vue";
 }
 
 .home-view {
-  overflow-y: auto; /* Allow vertical scrolling */
+  overflow-y: auto;
 }
 </style>

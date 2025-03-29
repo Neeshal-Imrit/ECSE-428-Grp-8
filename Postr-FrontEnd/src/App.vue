@@ -1,9 +1,7 @@
 <template>
   <div>
-    <!-- Your always-on-top nav bar -->
     <NavBar />
 
-    <!-- This is where different pages (Home, Shop, etc.) will appear -->
 
     <router-view />
   </div>
