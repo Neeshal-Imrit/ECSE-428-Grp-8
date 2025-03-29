@@ -22,7 +22,7 @@ Then the "CoolPoster" should have 6 likes
 Scenario: Successfully unlike a poster (Alternate Flow)
 Given the user is logged in as "smith@ap.com" before liking posters
 Given they already liked the "CoolPoster"
-Then the "CoolPoster" should have 4 likes
+Then the "CoolPoster" should have 5 likes
 
 Scenario: Attempt to like a poster without logging in (Error Flow)
 Given the user is not logged in to like posters

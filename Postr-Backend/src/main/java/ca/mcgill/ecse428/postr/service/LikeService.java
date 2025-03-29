@@ -29,8 +29,8 @@ public class LikeService {
     private PosterRepository posterRepository;
 
     public LikeDTO likePoster(Long userId, Long posterId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Poster poster = posterRepository.findById(posterId).orElseThrow(() -> new RuntimeException("Poster not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new PostrException(HttpStatus.BAD_REQUEST, "User not found"));
+        Poster poster = posterRepository.findById(posterId).orElseThrow(() -> new PostrException(HttpStatus.BAD_REQUEST, "Poster not found"));
 
         // Check if the user is trying to like their own poster
         if (poster.getUser() != null && poster.getUser().getId().equals(userId)) {
@@ -60,8 +60,8 @@ public class LikeService {
 
         Poster poster = like.getPoster();
         if (poster != null) {
-            // Decrement the like count
-            poster.setNumLikes(poster.getNumLikes() - 1);
+            // Ensure like count does not go below zero
+            poster.setNumLikes(Math.max(0, poster.getNumLikes() - 1));
             posterRepository.save(poster);
         }
 
