@@ -142,4 +142,8 @@ public class PosterService {
         return posterRepository.save(poster);
     }
 
+    @Transactional
+    public List<Poster> getMostPurchasedPosters() {
+        return posterRepository.findAllByOrderByNumPurchasesDesc();
+    }
 }

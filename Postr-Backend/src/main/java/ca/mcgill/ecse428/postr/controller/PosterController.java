@@ -136,4 +136,16 @@ public class PosterController {
             return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * GET /posters/purchaseLeaderboard
+     * Retrieve the posters from most purchased to least purchased.
+     */
+    @GetMapping("/posters/purchaseLeaderboard")
+    public List<PosterResponseDTO> getPurchaseLeaderboard() {
+        List<Poster> posters = posterService.getMostPurchasedPosters();
+        return posters.stream()
+                      .map(PosterResponseDTO::new)
+                      .collect(Collectors.toList());
+    }
 }

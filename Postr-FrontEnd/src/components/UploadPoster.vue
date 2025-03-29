@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import FooterComponent from "@/components/FooterComponent.vue"; 
+import FooterComponent from "@/components/Footer.vue"; 
 
 
 export default {
