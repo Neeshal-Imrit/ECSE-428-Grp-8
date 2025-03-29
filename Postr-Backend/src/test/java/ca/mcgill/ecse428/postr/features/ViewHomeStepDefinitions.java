@@ -50,7 +50,6 @@ public class ViewHomeStepDefinitions {
         // No action needed since this scenario only involves viewing posters.
     }
 
-
     @Given("the following posters exist in the system")
     public void theFollowingPostersExistInTheSystem(DataTable dataTable) {
         clearDatabase();
@@ -69,7 +68,6 @@ public class ViewHomeStepDefinitions {
             poster.setUser(aUser);
             posterRepository.save(poster);
         }
-
     }
 
     @Given("there are no posters available in the system")

@@ -29,6 +29,7 @@ public class Poster {
 
   private String title;
 
+  private int likes;
   public String getTitle() {
     return title;
   }
@@ -87,6 +88,7 @@ public class Poster {
           "Unable to create poster due to user. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     numPurchases = 0;
+    likes = 0;
   }
 
   // ------------------------
@@ -154,6 +156,17 @@ public class Poster {
     numPurchases += 1;
     wasAdded = true;
     return wasAdded;
+  }
+
+  public int getNumLikes(){
+    return likes;
+  }
+
+  public int setNumLikes(int aLikes){
+    int wasSet = 0;
+    likes = aLikes;
+    wasSet = 1;
+    return wasSet;
   }
 
   public String toString() {
