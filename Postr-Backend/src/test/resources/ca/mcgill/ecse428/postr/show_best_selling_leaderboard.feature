@@ -11,7 +11,7 @@ Background:
     | Amazing Art    | 25          |  
 
 Scenario: Display leaderboard successfully (Normal Flow)  
-  Given the user is on the "Leaderboard" page  
+  Given the user is on the Leaderboard page  
   Then they should see the posters sorted by salesCount in descending order  
     | title          | salesCount  |  
     | Amazing Art    | 25          |  
@@ -20,8 +20,8 @@ Scenario: Display leaderboard successfully (Normal Flow)
 
 Scenario: No sales data available (Error Flow)  
   Given there are no sales data in the system  
-  When the user is on the "Leaderboard" page  
-  Then they should see a message "No leaderboard data available"
+  When the user is on the Leaderboard page  
+  Then they should see a message "No leaderboard data available" leaderboard
 
 Scenario: No sales data available for one of the posters (Alternate Flow)
    Given the following posters have sales data in the system  
@@ -29,7 +29,7 @@ Scenario: No sales data available for one of the posters (Alternate Flow)
     | CoolPoster     | 15          |  
     | VeryCoolPoster | 10          |  
     | Amazing Art    |             |  
-   When the user is on the "Leaderboard" page  
+   When the user is on the Leaderboard page  
    Then they should see the posters sorted by salesCount in descending order  
     | title          | salesCount  |   
     | CoolPoster     | 15          |  
